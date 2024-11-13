@@ -95,7 +95,8 @@ const Book = () => {
             {books?.map((book) => (
               <div key={book.id} className="bg-white rounded-xl shadow-md p-4">
                 <img
-                  src={book?.thumbnailURL}
+                  src="https://instructor-academy.onlinecoursehost.com/content/images/2023/05/101_-What-Online-Courses-Are-Most-In-Demand-In-2023_.jpg"
+                  // src={book?.thumbnailURL}
                   alt=""
                   className="h-80 w-full bg-gray-200 rounded-lg"
                 />

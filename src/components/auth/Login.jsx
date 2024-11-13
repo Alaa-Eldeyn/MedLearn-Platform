@@ -3,6 +3,7 @@ import login from "../../assets/login.svg";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { logIn, signInSchema } from "../../utils/auth";
+import { addToken, addUser } from "../../utils/LocalStorage";
 
 const Login = () => {
   const {
@@ -15,6 +16,8 @@ const Login = () => {
   const handleLogin = async (data) => {
     let res = await logIn(data);
     if (res?.isSuccess) {
+      addUser(res?.data);
+      addToken(res?.token);
       window.location.href = "/";
     }
   };
@@ -30,7 +33,7 @@ const Login = () => {
             <div className="text-center w-full mx-auto">
               <span className="text-secondary">Welcome to</span>
               <h3 className="text-primary text-2xl font-bold max-md:text-center">
-                MedLearn Hub
+                Practice 2 Pass 
               </h3>
             </div>
             <div className="my-6">

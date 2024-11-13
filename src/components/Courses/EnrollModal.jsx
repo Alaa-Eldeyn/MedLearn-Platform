@@ -1,6 +1,7 @@
 import { useState } from "react";
 import paypal from "../../assets/image.svg";
 import card from "../../assets/twemoji_credit-card.svg";
+import { toast } from "react-toastify";
 
 const EnrollModal = ({
   setEnrollModal,
@@ -10,10 +11,12 @@ const EnrollModal = ({
   handlePaypalPayment,
   setPaypalEmail,
   paypalEmail,
+  receipt,
 }) => {
   const [method, setMethod] = useState("");
   const [step, setStep] = useState(0); // 0: choose method, 1: paypal, 2: local
   const [tooltip, setTooltip] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <>
       <div
@@ -117,12 +120,15 @@ const EnrollModal = ({
                 </button>
                 <button
                   className="bg-[#E2508D] text-white rounded-full px-10 py-3"
-                  onClick={() => {
-                    handlePaypalPayment();
+                  disabled={isLoading}
+                  onClick={async () => {
+                    setIsLoading(true); 
+                    await handlePaypalPayment();
+                    setIsLoading(false); 
                     setEnrollModal(false);
                   }}
                 >
-                  Got it
+                  {isLoading ? "Loading..." : "Pay"}
                 </button>
               </div>
             </>
@@ -163,12 +169,19 @@ const EnrollModal = ({
                 </button>
                 <button
                   className="bg-[#E2508D] text-white rounded-full px-10 py-3"
-                  onClick={() => {
-                    handleLocalPayment();
+                  disabled={isLoading}
+                  onClick={async () => {
+                    if (!receipt) {
+                      toast.error("Please upload the receipt");
+                      return;
+                    }
+                    setIsLoading(true);
+                    await handleLocalPayment();
+                    setIsLoading(false);
                     setEnrollModal(false);
                   }}
                 >
-                  Got it
+                  {isLoading ? "Loading..." : "Pay"}
                 </button>
               </div>
             </>

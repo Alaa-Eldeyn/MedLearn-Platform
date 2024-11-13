@@ -1,11 +1,14 @@
 import { useState } from "react";
 import doc from "../assets/doc.png";
 import { MyJoinedCourses, MyUploadedCourses } from "../components/Courses";
+import ScrollUp from "../components/ScrollUp";
 
 const MyCourses = () => {
   const [activeTap, setActiveTap] = useState("joined");
   return (
     <>
+      <ScrollUp />
+
       <div className="relative center h-[406px]">
         <img
           src={doc}

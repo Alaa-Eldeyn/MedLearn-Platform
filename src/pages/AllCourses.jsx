@@ -3,11 +3,13 @@ import doc from "../assets/doc.png";
 import { Courses } from "../components/Courses";
 import { useState } from "react";
 import AddCourse from "../components/Courses/AddCourse";
+import ScrollUp from "../components/ScrollUp";
 
 const AllCourses = () => {
   const [addCourseModal, setAddCourseModal] = useState(false);
   return (
     <>
+      <ScrollUp />
       {addCourseModal && <AddCourse setAddCourseModal={setAddCourseModal} />}
       <div className="relative center h-[406px]">
         <img

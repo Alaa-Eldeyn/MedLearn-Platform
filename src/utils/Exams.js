@@ -14,7 +14,31 @@ const schema = z.object({
 
 const getAllExams = async () => {
   try {
-    let response = await customAxios.get("/StandardTest");
+    let response = await customAxios.get("/StandardTest/GetAllStandardTests");
+    return response?.data;
+  } catch (error) {
+    console.error(error);
+    return { isSuccess: false };
+  }
+};
+
+const getAllPremiumExams = async () => {
+  try {
+    let response = await customAxios.get(
+      "/StandardTest/GetAllPremiumStandardTests"
+    );
+    return response?.data;
+  } catch (error) {
+    console.error(error);
+    return { isSuccess: false };
+  }
+};
+
+const getAllFreeExams = async () => {
+  try {
+    let response = await customAxios.get(
+      "/StandardTest/GetAllFreeStandardTests"
+    );
     return response?.data;
   } catch (error) {
     console.error(error);
@@ -89,51 +113,6 @@ const deleteExam = async (id) => {
   return { isSuccess: false };
 };
 
-const addUserToExam = async (courseId) => {
-  const customSwal = Swal.mixin({
-    customClass: {
-      confirmButton: "bg-primary text-white mr-5 py-3 px-14 mb-3 rounded-full",
-      cancelButton: "bg-[#FEF3FF] text-black  py-3 px-14 mb-3 rounded-full",
-      title: "text-[#E2508D]",
-      input: "w-[80%] mx-auto",
-      popup: "rounded-2xl",
-    },
-    buttonsStyling: false,
-  });
-  const result = await customSwal.fire({
-    padding: "1rem",
-    title: "Add User Access",
-    text: "Do you want to Open This course for the User ?",
-    input: "email",
-    inputPlaceholder: "Enter User Email here",
-    showCancelButton: true,
-    confirmButtonText: "Add Now",
-  });
-  if (result.isConfirmed) {
-    console.log(result.value);
-    try {
-      // let response = await customAxios.post(
-      //   `/Course/Enroll?studentId=${result.value}&courseId=${courseId}`
-      // );
-      // if (response.data.isSuccess) {
-      //   customSwal.fire({
-      //     icon: "success",
-      //     title: "Successful Process",
-      //     text: "User Added Successfully",
-      //     showConfirmButton: false,
-      //     timer: 1000,
-      //     confirmButtonText: "Got it",
-      //   });
-      //   return response?.data;
-      // }
-    } catch (error) {
-      console.log(error);
-      return { isSuccess: false };
-    }
-  }
-  return { isSuccess: false };
-};
-
 const addQuestion = async (testId, data) => {
   try {
     let response = await customAxios.post(`Question/test/${testId}`, data, {
@@ -177,7 +156,6 @@ const deleteQuestion = async (id) => {
   });
   if (result.isConfirmed) {
     console.log(id);
-    return;
     try {
       let response = await customAxios.delete(`/Question/${id}`);
       return response?.data;
@@ -193,11 +171,12 @@ export {
   getAllExams,
   addExam,
   deleteExam,
-  addUserToExam,
   schema,
   getExam,
   updateExam,
   addQuestion,
   getTestQuestions,
   deleteQuestion,
+  getAllFreeExams,
+  getAllPremiumExams,
 };

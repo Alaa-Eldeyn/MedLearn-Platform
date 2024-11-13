@@ -64,10 +64,13 @@ const MyJoinedCourses = () => {
                       </h3>
                     </div>
                     <p className="text-gray-500 my-2 text-sm h-14">
-                      Deepen your understanding of advanced cardiovascular
-                      treatments and diagnostic techniques.
+                      {item?.objectives?.map((obj, i) => (
+                        <span key={i} className="block">
+                          {obj},
+                        </span>
+                      ))}
                     </p>
-                    <span className="text-xs">{item?.instructorFullName}</span>
+                    <span className="text-xs">By: {item?.instructorFullName}</span>
                     <Link
                       to={`${item?.id}`}
                       className="center text-white bg-primary p-3 w-full rounded-full mt-3"

@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import privacy from "../assets/privacy.png";
 import { Footer, Header } from "../components/Home";
+import ScrollUp from "../components/ScrollUp";
 const Privacy = () => {
   return (
     <>
+      <ScrollUp />
       <Header />
       <div className="relative bg-gray-300 flex items-center justify-center h-[251px] mb-14">
         <div className="absolute inset-0 bg-[#1F0C30E5] opacity-90 z-10"></div>
@@ -13,17 +15,17 @@ const Privacy = () => {
           className="object-cover w-full h-full z-0"
         />
         <h1 className="text-lg absolute mt-20 text-center lg:text-3xl font-bold text-white z-20">
-          Privacy Policy for MedLearn Hub
+          Privacy Policy for Practice 2 Pass
         </h1>
       </div>
 
       <div className="container leading-relaxed space-y-3">
         <h2 className="text-2xl font-bold">Introduction</h2>
         <p>
-          At MedLearn Hub, we prioritize the privacy of our users. This Privacy
-          Policy outlines how we collect, use, and safeguard your personal
-          information when you use our platform, including our website and
-          services.
+          At Practice 2 Pass, we prioritize the privacy of our users. This
+          Privacy Policy outlines how we collect, use, and safeguard your
+          personal information when you use our platform, including our website
+          and services.
         </p>
 
         <h2 className="text-xl font-bold">1. Information We Collect</h2>
@@ -144,7 +146,7 @@ const Privacy = () => {
           free to contact us at:
         </p>
         <ul className="list-disc list-inside">
-          <li>MedLearn Hub Support</li>
+          <li>Practice 2 Pass Support</li>
           <li>Email: support@medlearnhub.com</li>
           <li>Phone: +201015800248</li>
         </ul>

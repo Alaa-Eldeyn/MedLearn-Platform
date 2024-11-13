@@ -9,6 +9,7 @@ import { useLocation } from "react-router-dom";
 import "preline/preline";
 import { Details, EditCourse, ViewCourse } from "./components/Courses";
 import ViewBlog from "./components/Blogs/ViewBlog";
+import { FreeTest, PremiumTest } from "./components/Exams";
 
 function App() {
   const location = useLocation();
@@ -42,7 +43,10 @@ function App() {
           <Route path="books" element={<Books />} />
           <Route path="blogs" element={<Blogs />} />
           <Route path="blogs/:id" element={<ViewBlog />} />
-          <Route path="exams" element={<Exams />} />
+          <Route path="free-exams" element={<Exams isFree={true} />} />
+          <Route path="free-exams/:id" element={<FreeTest />} />
+          <Route path="premium-exams" element={<Exams isFree={false} />} />
+          <Route path="premium-exams/:id" element={<PremiumTest />} />
         </Route>
       </Routes>
     </>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import quiz from "../../assets/quiz.svg"
 const Quizzes = () => {
   return (
@@ -14,12 +15,12 @@ const Quizzes = () => {
             answers. Try the free plan with up to 50 questions per subject, or
             unlock unlimited access with our premium subscription plans.
           </p>
-          <a
-            href="#"
+          <Link
+            to="/academy/free-exams"
             className="bg-[#E2508D] mb-6 font-bold text-white py-3 px-6 rounded-full shadow-lg hover:shadow-xl soft"
           >
             Get Start Your Free Test Now
-          </a>
+          </Link>
         </div>
         <div className="hidden lg:mt-0 lg:flex relative">
           <div className="w-[347px] h-[429px] ">

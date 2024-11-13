@@ -1,25 +1,15 @@
 import { Link } from "react-router-dom";
 import MainTitle from "./MainTitle";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { useEffect, useState } from "react";
-import { getLatestBlogs } from "../../utils/Home";
 
-const Blogs = () => {
-  const [blogs, setBlogs] = useState([]);
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      let res = await getLatestBlogs();
-      setBlogs(res?.data?.blogs);
-    };
-    fetchBlogs();
-  }, []);
+const Blogs = ({ blogs }) => {
   return (
     <>
       <div className="w-10/12 sm:w-full mx-auto py-24">
         <MainTitle title={"Our Blogs"} desc={"Explore Our Top Blogs"} />
         <div className="container mx-auto my-6">
           <div className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {blogs.map((blog, index) => (
+            {blogs?.map((blog, index) => (
               <div key={index} className="rounded-3xl shadow-lg border p-3">
                 <div className="relative">
                   <img
@@ -29,7 +19,7 @@ const Blogs = () => {
                     alt={blog.title || "Blog Image"}
                   />
                 </div>
-                <div className="space-y-2 pt-3 font-semibold text-lg soft">
+                <div className="space-y-2 pt-3 font-semibold text-lg">
                   <h2 className="line-clamp-1">{blog?.title}</h2>
                   <p className="leading-6 text-gray-500 line-clamp-3 text-sm h-20">
                     {blog?.intro}
@@ -47,7 +37,7 @@ const Blogs = () => {
         </div>
         <div className="center">
           <Link
-            to={``}
+            to={`/academy/blogs`}
             className="rounded-xl center !gap-3 group text-secondary font-bold text-center py-2 px-5 text-lg border-2 border-secondary"
           >
             Show All Blogs

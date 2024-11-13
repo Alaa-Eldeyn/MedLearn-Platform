@@ -1,10 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { signUp, SignupSchema } from "../../utils/auth";
 import signup from "../../assets/signup.svg";
+import { useState } from "react";
 
 const Register = () => {
+  const [acceptRules, setAcceptRules] = useState(false);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -14,8 +17,14 @@ const Register = () => {
   });
 
   const RegisterUser = async (data) => {
+    if (!acceptRules) {
+      alert("Please accept the terms and conditions");
+      return;
+    }
     let res = await signUp(data);
-    console.log(res);
+    if (res?.isSuccess) {
+      navigate("/sign-in");
+    }
   };
   return (
     <div className="min-h-screen center bg-slate-100 py-4 sm:py-0">
@@ -28,7 +37,7 @@ const Register = () => {
           <div className="text-center w-full mx-auto">
             <span className="text-secondary">Welcome to</span>
             <h3 className="text-primary text-[24px] font-bold max-md:text-center">
-              MedLearn Hub
+              Practice 2 Pass
             </h3>
           </div>
           <div className="grid lg:grid-cols-2 gap-5">
@@ -131,13 +140,17 @@ const Register = () => {
               id="remember-me"
               name="remember-me"
               type="checkbox"
-              className="h-4 w-4 shrink-0  mt-1"
+              className="h-4 w-4 shrink-0 mt-1"
+              value={acceptRules}
+              onChange={() => {
+                setAcceptRules(!acceptRules)
+              }}
             />
             <label
               htmlFor="remember-me"
               className="ml-3 block text-sm cursor-pointer"
             >
-              By creating an account on MedLearn Hub, you agree to our{" "}
+              By creating an account on Practice 2 Pass, you agree to our{" "}
               <a href="/sign-up" className="font-bold text-primary underline">
                 Privacy Policy
               </a>

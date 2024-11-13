@@ -186,7 +186,11 @@ const ViewCourse = () => {
                 </div>
               ) : (
                 <div className="w-full h-full rounded-xl">
-                  <video className="w-full h-full rounded-xl" controls>
+                  <video
+                    className="w-full h-full rounded-xl"
+                    controls
+                    controlsList="nodownload"
+                  >
                     <source
                       // src="https://www.w3schools.com/html/mov_bbb.mp4"
                       src={`http://localhost:5000${currentLesson?.videoURL}`}

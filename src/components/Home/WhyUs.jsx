@@ -7,7 +7,7 @@ const WhyUs = () => {
       <div className="w-10/12 sm:w-full mx-auto my-32">
         <MainTitle
           title={"Why Choose Us?"}
-          desc={"What distinguishes MedLearn Hub"}
+          desc={"What distinguishes Practice 2 Pass"}
         />
         <div className="w-fit container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-20 lg:gap-6 my-16">
           {whyUs.map((item, index) => (
@@ -30,9 +30,7 @@ const WhyUs = () => {
                 >
                   {item.title}
                 </h2>
-                <p className="text-center text-md font-normal">
-                  {item.body}
-                </p>
+                <p className="text-center text-md font-normal">{item.body}</p>
               </div>
             </div>
           ))}

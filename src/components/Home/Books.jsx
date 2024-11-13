@@ -4,19 +4,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import { useEffect, useState } from "react";
-import { getLatestBooks } from "../../utils/Home";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
-const Books = () => {
-  const [books, setBooks] = useState([]);
-  useEffect(() => {
-    const fetchBooks = async () => {
-      let res = await getLatestBooks();
-      setBooks(res?.data?.items);
-    };
-    fetchBooks();
-  }, []);
+const Books = ({ books }) => {
+  console.log(books);
+  
   return (
     <>
       <section className="mt-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -34,25 +26,25 @@ const Books = () => {
 
             <Swiper
               modules={[Navigation]}
-              spaceBetween={30}
+              spaceBetween={20}
               slidesPerView={3}
               navigation
               loop
-              className="h-40 select-none mt-5"
+              className="h-40 select-none mt-5 px-5"
             >
               {books?.map((book, index) => (
                 <SwiperSlide key={index}>
                   <img
                     src={book?.thumbnailURL}
-                    alt=""
-                    className="h-40 bg-white"
+                    alt={book?.title}
+                    className="h-40 w-full object-cover rounded-lg bg-slate-500"
                   />
                 </SwiperSlide>
               ))}
             </Swiper>
             <div className="mt-5 flex justify-center lg:justify-start">
               <Link
-                href="/pages/Medical-books"
+                to="/academy/books"
                 className="center group !gap-3 text-lg py-2 font-bold text-white "
               >
                 Show All Books

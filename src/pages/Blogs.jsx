@@ -1,9 +1,12 @@
 import doc from "../assets/doc.png";
 import Blog from "../components/Blogs/Blog";
+import ScrollUp from "../components/ScrollUp";
 
 const Blogs = () => {
   return (
     <>
+      <ScrollUp />
+
       <div className="relative center h-[406px]">
         <img
           src={doc}

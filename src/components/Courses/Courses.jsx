@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import {
-  getApprovedCourses,
   getFilteredCourses,
   requestLocalEnroll,
   requestPaypalEnroll,
@@ -26,12 +25,12 @@ const Courses = () => {
   const [filters, setFilters] = useState({
     category: "",
     subCategory: "",
-    minPrice: 10,
+    minPrice: 0,
     maxPrice: 10000,
   });
   useEffect(() => {
     const fetchCourses = async () => {
-      let res = await getApprovedCourses();
+      let res = await getFilteredCourses(filters);
       setCourses(res?.data);
     };
     const getCategoriesAndSubs = async () => {
@@ -99,6 +98,7 @@ const Courses = () => {
           handlePaypalPayment={handlePaypalPayment}
           setPaypalEmail={setPaypalEmail}
           paypalEmail={paypalEmail}
+          receipt={receipt}
         />
       )}
       <div className="center mx-auto w-[90%] lg:w-fit flex-col lg:flex-row flex-wrap ">
@@ -208,10 +208,14 @@ const Courses = () => {
                     <h3 className="font-bold text-[#E2508D]">{item?.price}$</h3>
                   </div>
                   <p className="text-gray-500 my-2 text-sm h-14">
-                    Deepen your understanding of advanced cardiovascular
-                    treatments and diagnostic techniques.
+                    {console.log(item)}
+                    {/* {item?.objectives?.map((obj, i) => (
+                      <span key={i} className="block">
+                        {obj},
+                      </span>
+                    ))} */}
                   </p>
-                  <span className="text-xs">{item?.instructorFullName}</span>
+                  <span className="text-xs">By: {item?.instructorFullName}</span>
                   <button
                     onClick={() => {
                       setEnrollPrice(item?.price);

@@ -8,7 +8,13 @@ const SignupSchema = z
   .object({
     firstName: z.string().min(1, "First name is required"),
     lastName: z.string().min(1, "Last name is required"),
-    phoneNumber: z.string().min(10, "Phone number must be at least 10 digits"),
+    phoneNumber: z
+      .string()
+      .min(5, { message: "Please enter a valid phone number" })
+      .regex(
+        /^\+\d{1,3}\d{4,14}$/,
+        "Phone Number Format: +[country code][number] (e.g., +1234567890)"
+      ),
     email: z.string().email("Invalid email address"),
     password: z
       .string()

@@ -15,7 +15,9 @@ const Blog = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       let res = await getAllBlogs();
-      setBlogs(res?.data);
+      if (res?.isSuccess) {
+        setBlogs(res?.data);
+      }
     };
     const getCategoriesAndSubs = async () => {
       let cat = await getAllCategories("Blogs");
@@ -94,9 +96,10 @@ const Blog = () => {
             {blogs?.map((blog) => (
               <div key={blog.id} className="bg-white rounded-xl shadow-md p-4">
                 <img
-                  src={"http://localhost:5000/" + blog?.imageURL}
+                  src="https://instructor-academy.onlinecoursehost.com/content/images/2023/05/101_-What-Online-Courses-Are-Most-In-Demand-In-2023_.jpg"
+                  // src={"http://localhost:5000/" + blog?.imageURL}
                   alt=""
-                  className="h-40 w-full bg-gray-200 rounded-lg"
+                  className="h-40 w-full bg-gray-200 rounded-lg object-cover"
                 />
                 <div className="mt-3 space-y-2 flex flex-col justify-between h-40">
                   <div>

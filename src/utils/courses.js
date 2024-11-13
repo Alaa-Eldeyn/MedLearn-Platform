@@ -399,9 +399,27 @@ const requestLocalEnroll = async (data) => {
   }
 };
 
+const requestLocalSubscription = async (data) => {
+  try {
+    let response = await customAxios.post(
+      `/User/RequestSubscribtionLocally?UserId=${data.UserId}`,
+      { TransactionImage: data.TransactionImage },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response?.data;
+  } catch (error) {
+    console.error(error);
+    return { isSuccess: false };
+  }
+};
+
 const requestPaypalEnroll = async (data) => {
   try {
-    let response = await customAxios.post("/CreateSubscribtion", data);
+    let response = await customAxios.post("/PayPal/CreateSubscribtion", data);
     return response?.data;
   } catch (error) {
     console.error(error);
@@ -434,4 +452,5 @@ export {
   editCourseQuestion,
   requestLocalEnroll,
   requestPaypalEnroll,
+  requestLocalSubscription,
 };

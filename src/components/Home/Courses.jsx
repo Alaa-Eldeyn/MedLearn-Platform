@@ -1,18 +1,8 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import MainTitle from "./MainTitle";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { getLatestCourses } from "../../utils/Home";
 
-const Courses = () => {
-  const [courses, setCourses] = useState([]);
-  useEffect(() => {
-    const fetchCourses = async () => {
-      let res = await getLatestCourses();
-      setCourses(res?.data?.courses);
-    };
-    fetchCourses();
-  }, []);
+const Courses = ({ courses }) => {
   return (
     <>
       <div className="w-10/12 sm:w-full mx-auto pb-32">
@@ -53,10 +43,15 @@ const Courses = () => {
                     <h3 className="font-bold text-[#E2508D]">{item?.price}$</h3>
                   </div>
                   <p className="text-gray-500 my-2 text-sm h-14">
-                    Deepen your understanding of advanced cardiovascular
-                    treatments and diagnostic techniques.
+                    {item?.objectives?.map((obj, i) => (
+                      <span key={i} className="block">
+                        {obj},
+                      </span>
+                    ))}
                   </p>
-                  <span className="text-xs">{item?.instructorFullName}</span>
+                  <span className="text-xs">
+                    By: {item?.instructorFullName}
+                  </span>
                   <button className="center text-white bg-primary p-3 w-full rounded-full mt-3">
                     Enroll Now
                   </button>
@@ -73,7 +68,7 @@ const Courses = () => {
         </div>
         <div className="center">
           <Link
-            to={""}
+            to={"/academy/courses"}
             className="rounded-xl center !gap-3 group text-secondary font-bold text-center py-2 px-5 text-lg border-2 border-secondary"
           >
             Show All Courses

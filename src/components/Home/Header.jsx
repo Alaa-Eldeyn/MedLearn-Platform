@@ -1,11 +1,14 @@
-import { Link } from "react-router-dom";
-import { getUser } from "../../utils/LocalStorage";
+import { Link, useNavigate } from "react-router-dom";
+import { getToken, getUser, removeUser } from "../../utils/LocalStorage";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 const Header = () => {
   const [user, setUser] = useState(null);
   const [isScrolled, setIsScrolled] = useState(true);
+  const token = getToken();
+  const navigate = useNavigate();
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 10) {
@@ -16,12 +19,38 @@ const Header = () => {
     };
     handleScroll();
     window.addEventListener("scroll", handleScroll);
-    const fetchedUser = getUser();
-    setUser(fetchedUser);
+
+    if (checkUser()) {
+      removeUser();
+      setUser(null);
+    } else {
+      setUser(getUser());
+    }
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  const checkUser = () => {
+    if (!token) return true;
+
+    const tokenParts = token.split(".");
+    if (tokenParts.length !== 3) return true;
+
+    const payload = JSON.parse(atob(tokenParts[1]));
+
+    const expirationDate = payload.exp * 1000;
+
+    const currentDate = Date.now();
+
+    return currentDate > expirationDate;
+  };
+
+  const handleLogout = () => {
+    removeUser();
+    setUser(null);
+    navigate("/");
+  };
 
   return (
     <header
@@ -34,7 +63,7 @@ const Header = () => {
           className="order-0 flex-none text-lg sm:text-3xl font-extrabold focus:outline-none focus:opacity-80 text-[#8347be]"
           to="/"
         >
-          {`Naser's Academy`}
+          {`Practice 2 Pass`}
         </Link>
         <div className="md:order-3 flex items-center gap-x-2">
           {user ? (
@@ -82,18 +111,19 @@ const Header = () => {
                   aria-orientation="vertical"
                   aria-labelledby="hs-dropdown-default"
                 >
-                  <div className="p-1 space-y-0.5">
+                  <div className="p-1">
                     <Link
                       className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-white hover:bg-[#543277] focus:outline-none"
-                      to="profile"
+                      to="/profile"
                     >
-                      Newsletter
+                      My Profile
                     </Link>
                     <button
                       className="flex w-full items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-white hover:bg-[#543277] focus:outline-none"
                       type="button"
+                      onClick={handleLogout}
                     >
-                      Purchases
+                      Log out
                     </button>
                   </div>
                 </div>
@@ -102,7 +132,7 @@ const Header = () => {
           ) : (
             <>
               <Link
-                to="/sing-in"
+                to="/sign-in"
                 className="py-2 px-3 hidden lg:inline-flex items-center gap-x-2 text-lg font-medium rounded-lg border border-transparent text-white shadow-sm focus:outline-none disabled:opacity-50 disabled:pointer-events-none"
               >
                 Sign in
@@ -253,17 +283,17 @@ const Header = () => {
               >
                 <Link
                   className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-white hover:bg-[#543277] focus:outline-none focus:bg-[#543277]"
-                  to="/academy/exams"
+                  to="/academy/free-exams"
                 >
-                  All Exams
+                  Free Exams
                 </Link>
 
-                <a
+                <Link
                   className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-white hover:bg-[#543277] focus:outline-none focus:bg-[#543277]"
-                  href="#"
+                  to="/academy/premium-exams"
                 >
-                  My Exams
-                </a>
+                  Premium Exams
+                </Link>
               </div>
             </div>
             <Link
