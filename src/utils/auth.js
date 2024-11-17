@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { z } from "zod";
 import { addToken, addUser } from "./LocalStorage";
 import Swal from "sweetalert2";
+import customAxios from "./customAxios";
 
 const SignupSchema = z
   .object({
@@ -41,6 +42,56 @@ const signInSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(5, "Password must be at least 5 characters"),
 });
+
+const profileInfoSchema = z
+  .object({
+    firstName: z.string().min(1, "First name is required"),
+    lastName: z.string().min(1, "Last name is required"),
+    phoneNumber: z
+      .string()
+      .min(5, { message: "Please enter a valid phone number" })
+      .regex(
+        /^\+\d{1,3}\d{4,14}$/,
+        "Phone Number Format: +[country code][number] (e.g., +1234567890)"
+      ),
+    newPassword: z
+      .string()
+      .max(100, "Password must not exceed 100 characters.")
+      .regex(
+        /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character."
+      )
+      .optional()
+      .or(z.literal("")),
+    confirmPassword: z.string().optional(),
+  })
+  .refine(
+    (data) => !data.newPassword || data.newPassword === data.confirmPassword,
+    {
+      path: ["confirmPassword"],
+      message: "Passwords do not match.",
+    }
+  );
+
+const updateProfile = async (userId, data) => {
+  try {
+    const response = await customAxios.put(`User/update/${userId}`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    if (response?.data?.isSuccess) {
+      toast.success("Profile updated successfully");
+    } else {
+      toast.error(response?.data?.message);
+    }
+    return response?.data;
+  } catch (error) {
+    console.log(error);
+    toast.error("Something went wrong, please try again.");
+    return { isSuccess: false };
+  }
+};
 
 const resetPassSchema = z
   .object({
@@ -126,7 +177,7 @@ const forgetPass = async (email) => {
         text: "Please check your email",
         timer: 3000,
       });
-      window.location.href = "/";
+      return res?.data;
     } else {
       toast.error(res?.data?.message);
       console.log(res);
@@ -172,4 +223,6 @@ export {
   resetPassword,
   signInSchema,
   resetPassSchema,
+  profileInfoSchema,
+  updateProfile,
 };

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import login from "../../assets/login.svg";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -6,6 +6,7 @@ import { logIn, signInSchema } from "../../utils/auth";
 import { addToken, addUser } from "../../utils/LocalStorage";
 
 const Login = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -18,7 +19,7 @@ const Login = () => {
     if (res?.isSuccess) {
       addUser(res?.data);
       addToken(res?.token);
-      window.location.href = "/";
+      navigate("/");
     }
   };
   return (
@@ -33,7 +34,7 @@ const Login = () => {
             <div className="text-center w-full mx-auto">
               <span className="text-secondary">Welcome to</span>
               <h3 className="text-primary text-2xl font-bold max-md:text-center">
-                Practice 2 Pass 
+                Practice 2 Pass
               </h3>
             </div>
             <div className="my-6">

@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { forgetPass } from "../../utils/auth";
 import forget from "../../assets/forget.svg";
 import { useForm } from "react-hook-form";
 
 const ForgetPass = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -12,7 +13,9 @@ const ForgetPass = () => {
   } = useForm();
   const handleForgetPass = async () => {
     let res = await forgetPass(getValues("email"));
-    if (!res?.isSuccess) {
+    if (res?.isSuccess) {
+      navigate("/sign-in");
+    } else {
       console.log("Error:", res);
       return;
     }

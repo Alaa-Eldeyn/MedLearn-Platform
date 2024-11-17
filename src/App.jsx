@@ -1,5 +1,13 @@
 import { Route, Routes } from "react-router-dom";
-import { AllCourses, Blogs, Books, Exams, Home, MyCourses } from "./pages";
+import {
+  AllCourses,
+  Blogs,
+  Books,
+  Exams,
+  Home,
+  MyCourses,
+  Profile,
+} from "./pages";
 import { ForgetPass, Login, Register, ResetPass } from "./components/auth";
 import ProtectedRoute from "./components/ProtectedRoute";
 import SharedLayout from "./components/SharedLayout";
@@ -47,6 +55,7 @@ function App() {
           <Route path="free-exams/:id" element={<FreeTest />} />
           <Route path="premium-exams" element={<Exams isFree={false} />} />
           <Route path="premium-exams/:id" element={<PremiumTest />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>
     </>

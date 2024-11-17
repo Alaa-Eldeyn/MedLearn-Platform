@@ -9,7 +9,7 @@ const Hero = () => {
             <p className="text-sm md:text-[16px] text-white mb-3">
               Boost Your Medical Career with Expert-Led Courses and Insights!
             </p>
-            <h1 className="mb-6 text-white text-xl md:text-4xl leading-normal">
+            <h1 className="mb-6 text-white text-xl md:text-4xl">
               Access a wide range of
               <span className="p-1 w-full text-[#C29CE8] font-bold">
                 {" "}

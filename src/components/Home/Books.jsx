@@ -7,8 +7,6 @@ import "swiper/css/navigation";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 const Books = ({ books }) => {
-  console.log(books);
-  
   return (
     <>
       <section className="mt-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

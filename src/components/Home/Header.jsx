@@ -79,7 +79,7 @@ const Header = () => {
                 >
                   {user?.imageUrl ? (
                     <img
-                      src={user.imageUrl}
+                      src={"http://localhost:5000/" + user.imageUrl}
                       alt=""
                       className="size-7 rounded-full"
                     />
@@ -106,24 +106,29 @@ const Header = () => {
                 </button>
 
                 <div
-                  className="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 bg-primary shadow-md rounded-lg mt-2 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full"
+                  className="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-48 bg-white shadow-md rounded-lg mt-2 p-2 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full"
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="hs-dropdown-default"
                 >
                   <div className="p-1">
                     <Link
-                      className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-white hover:bg-[#543277] focus:outline-none"
-                      to="/profile"
+                      className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm hover:bg-gray-50 focus:outline-none"
+                      to="/academy/profile"
                     >
+                      <Icon
+                        icon="solar:user-linear"
+                        className="bg-[#F5EDFE] size-8 p-1 rounded-lg"
+                      />
                       My Profile
                     </Link>
                     <button
-                      className="flex w-full items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-white hover:bg-[#543277] focus:outline-none"
+                      className="flex w-full items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-[#CF4646] hover:bg-gray-50 focus:outline-none"
                       type="button"
                       onClick={handleLogout}
                     >
-                      Log out
+                      <Icon icon="hugeicons:logout-03" 
+                      className="bg-[#FFEBEB] size-8 p-1 rounded-lg" /> Log out
                     </button>
                   </div>
                 </div>
