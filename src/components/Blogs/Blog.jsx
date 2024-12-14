@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getAllCategories, getAllSubCategories } from "../../utils/categories";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { getAllBlogs } from "../../utils/Blogs";
-import { Link } from "react-router-dom";
+import BlogCard from "./BlogCard";
 
 const Blog = () => {
   const [categories, setCategories] = useState([]);
@@ -90,38 +90,11 @@ const Blog = () => {
           <Icon icon="quill:search" className="text-3xl" />
         </button>
       </div>
-      <div className="w-10/12 sm:w-full mx-auto pb-20">
-        <div className="container mx-auto my-6">
-          <div className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {blogs?.map((blog) => (
-              <div key={blog.id} className="bg-white rounded-xl shadow-md p-4">
-                <img
-                  src="https://instructor-academy.onlinecoursehost.com/content/images/2023/05/101_-What-Online-Courses-Are-Most-In-Demand-In-2023_.jpg"
-                  // src={"http://localhost:5000/" + blog?.imageURL}
-                  alt=""
-                  className="h-40 w-full bg-gray-200 rounded-lg object-cover"
-                />
-                <div className="mt-3 space-y-2 flex flex-col justify-between h-40">
-                  <div>
-                    <h3 className="text-lg font-bold line-clamp-1">
-                      {blog.title}
-                    </h3>
-                    <p className="text-sm text-gray-800 line-clamp-3">
-                      {blog.intro}
-                    </p>
-                  </div>
-                  <div className="mt-3">
-                    <Link
-                      to={`${blog.id}`}
-                      className="rounded-full border border-[#E2508D] text-[#E2508D] text-sm text-center block p-4"
-                    >
-                      See More
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+      <div className="container mx-auto my-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {blogs.map((blog) => (
+            <BlogCard key={blog.id} blog={blog} />
+          ))}
         </div>
       </div>
     </>

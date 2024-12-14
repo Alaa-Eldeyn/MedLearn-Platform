@@ -5,7 +5,7 @@ import { getAllFreeExams, getAllPremiumExams } from "../../utils/Exams";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { getUser } from "../../utils/LocalStorage";
-import { requestLocalSubscription } from "../../utils/courses";
+import { requestLocalSubscription, requestPaypalEnroll } from "../../utils/courses";
 import EnrollModal from "../Courses/EnrollModal";
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +13,7 @@ const Exam = ({ isFree }) => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
-  const [enrollPrice, setEnrollPrice] = useState(100);
+  const [enrollPrice] = useState(100);
   const [enrollModal, setEnrollModal] = useState(false);
   const [receipt, setReceipt] = useState(null);
   const [paypalEmail, setPaypalEmail] = useState("");
@@ -78,8 +78,6 @@ const Exam = ({ isFree }) => {
     }
   };
   const handlePaypalPayment = async () => {
-    console.log("handlePaypalPayment");
-    return;
 
     let user = getUser();
     let data = {

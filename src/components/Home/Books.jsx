@@ -28,14 +28,17 @@ const Books = ({ books }) => {
               slidesPerView={3}
               navigation
               loop
-              className="h-40 select-none mt-5 px-5"
+              className="h-48 select-none mt-5 px-5 rounded-lg"
             >
               {books?.map((book, index) => (
-                <SwiperSlide key={index}>
+                <SwiperSlide
+                  key={index}
+                  className="h-48 rounded-lg overflow-hidden"
+                >
                   <img
-                    src={book?.thumbnailURL}
+                    src={`http://localhost:5000${book?.thumbnailURL}`}
                     alt={book?.title}
-                    className="h-40 w-full object-cover rounded-lg bg-slate-500"
+                    className="h-full w-full object-cover rounded-lg"
                   />
                 </SwiperSlide>
               ))}

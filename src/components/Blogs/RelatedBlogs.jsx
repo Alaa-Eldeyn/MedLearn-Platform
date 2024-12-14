@@ -3,9 +3,9 @@ import { Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getAllBlogs } from "../../utils/Blogs";
+import BlogCard from "./BlogCard";
 
 const RelatedBlogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -49,31 +49,7 @@ const RelatedBlogs = () => {
         {blogs?.map((blog, index) => {
           return (
             <SwiperSlide key={index}>
-              <div key={blog.id} className="bg-white rounded-xl shadow-md p-4">
-                <img
-                  src={"http://localhost:5000/" + blog?.imageURL}
-                  alt=""
-                  className="h-40 w-full bg-gray-200 rounded-lg"
-                />
-                <div className="mt-3 space-y-2 flex flex-col justify-between h-40">
-                  <div>
-                    <h3 className="text-lg font-bold line-clamp-1">
-                      {blog.title}
-                    </h3>
-                    <p className="text-sm text-gray-800 line-clamp-3">
-                      {blog.intro}
-                    </p>
-                  </div>
-                  <div className="mt-3">
-                    <Link
-                      to={`${blog.id}`}
-                      className="rounded-full border border-[#E2508D] text-[#E2508D] text-sm text-center block p-4"
-                    >
-                      See More
-                    </Link>
-                  </div>
-                </div>
-              </div>
+              <BlogCard blog={blog} />
             </SwiperSlide>
           );
         })}

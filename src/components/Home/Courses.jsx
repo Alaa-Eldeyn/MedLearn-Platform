@@ -52,12 +52,12 @@ const Courses = ({ courses }) => {
                   <span className="text-xs">
                     By: {item?.instructorFullName}
                   </span>
-                  <button className="center text-white bg-primary p-3 w-full rounded-full mt-3">
+                  {/* <button className="center text-white bg-primary p-3 w-full rounded-full mt-3">
                     Enroll Now
-                  </button>
+                  </button> */}
                   <Link
                     to={`/academy/courses/${item?.id}`}
-                    className="block text-center text-[#E2508D] border border-[#E2508D] p-3 w-full rounded-full mt-2"
+                    className="block text-center text-[#E2508D] hover:text-white hover:bg-[#E2508D] soft border border-[#E2508D] p-3 w-full rounded-full mt-2"
                   >
                     See More
                   </Link>

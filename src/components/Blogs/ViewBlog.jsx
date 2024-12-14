@@ -22,7 +22,7 @@ const ViewBlog = () => {
     };
     getAllCategoriesAndSubs();
     fetchBlog();
-  }, []);
+  }, [params?.id]);
 
   return (
     <>

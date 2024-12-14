@@ -32,6 +32,8 @@ const Book = () => {
     // setBooks(res?.data);
     console.log(filters);
   };
+  console.log(books);
+  
   return (
     <>
       <div className="center mx-auto w-[90%] lg:w-fit flex-col lg:flex-row flex-wrap ">
@@ -95,10 +97,9 @@ const Book = () => {
             {books?.map((book) => (
               <div key={book.id} className="bg-white rounded-xl shadow-md p-4">
                 <img
-                  src="https://instructor-academy.onlinecoursehost.com/content/images/2023/05/101_-What-Online-Courses-Are-Most-In-Demand-In-2023_.jpg"
-                  // src={book?.thumbnailURL}
+                  src={`http://localhost:5000${book?.thumbnailURL}`}
                   alt=""
-                  className="h-80 w-full bg-gray-200 rounded-lg"
+                  className="h-96 w-full bg-gray-200 rounded-lg"
                 />
                 <div className="mt-3 space-y-2 flex flex-col justify-between h-40">
                   <div>
@@ -111,7 +112,8 @@ const Book = () => {
                   </div>
                   <div className="mt-3">
                     <Link
-                      to={""}
+                      to={book.url || "#"}
+                      target="_blank"
                       className="rounded-full bg-[#59248E] text-white text-center block p-4"
                     >
                       Download This Book

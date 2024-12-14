@@ -66,7 +66,7 @@ const AddCourse = ({ setAddCourseModal }) => {
         },
         willClose: () => {
           clearInterval(timerInterval);
-          navigate(`/update-course/${res?.data?.id}`);
+          navigate(`/academy/courses`);
         },
       });
     }

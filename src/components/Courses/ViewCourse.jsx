@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getUser } from "../../utils/LocalStorage";
-import { getCourseQuestions, getJoinedCourses } from "../../utils/courses";
+import { getCourseQuestions, getOneCourse } from "../../utils/courses";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Swal from "sweetalert2";
 
 const ViewCourse = () => {
   const params = useParams();
-  const { id } = getUser();
   const [course, setCourse] = useState({});
   const [selectedLesson, setSelectedLesson] = useState(null);
   const [currentLesson, setCurrentLesson] = useState({});
@@ -60,17 +58,15 @@ const ViewCourse = () => {
   };
 
   useEffect(() => {
-    const fetchUserCourses = async () => {
-      let res = await getJoinedCourses(id);
-      let myCourse = res?.data.find((course) => course.id == params?.id);
-      if (myCourse) {
-        setCourse(myCourse);
-      } else {
-        setCourse({});
-      }
+    const fetchUserCourse = async () => {
+      let res = await getOneCourse(params?.id);
+      setCourse(res?.data);
+      setCurrentLesson(res?.data?.videos[0]);
+      setSelectedLesson(0);
     };
-    fetchUserCourses();
+    fetchUserCourse();
   }, [params?.id]);
+
   useEffect(() => {
     if (testMode) {
       const fetchQuestions = async () => {
@@ -80,6 +76,28 @@ const ViewCourse = () => {
       fetchQuestions();
     }
   }, [testMode]);
+
+  // useEffect(() => {
+  //   const handleKeyDown = (e) => {
+  //     if (
+  //       e.key === "F12" || // منع F12
+  //       (e.ctrlKey && e.shiftKey && e.key === "I") || // منع Ctrl+Shift+I
+  //       (e.ctrlKey && e.shiftKey && e.key === "C") || // منع Ctrl+Shift+C
+  //       (e.ctrlKey && e.key === "U") // منع Ctrl+U (عرض السورس كود)
+  //     ) {
+  //       e.preventDefault();
+  //     }
+  //   };
+  //   window.addEventListener("keydown", handleKeyDown);
+  //   const handleContextMenu = (e) => {
+  //     e.preventDefault();
+  //   };
+  //   window.addEventListener("contextmenu", handleContextMenu);
+  //   return () => {
+  //     window.removeEventListener("keydown", handleKeyDown);
+  //     window.removeEventListener("contextmenu", handleContextMenu);
+  //   };
+  // }, []);
 
   return (
     <>
@@ -129,9 +147,11 @@ const ViewCourse = () => {
                 <div className="flex flex-col gap-4">
                   <div className="w-full rounded-xl bg-white p-5 h-[400px] overflow-auto shadow pink-sc">
                     <h2 className="text-2xl font-bold text-primary mb-4">
-                      {course?.title}
+                      {questions?.length > 1
+                        ? course?.title
+                        : "No Questions Available"}
                     </h2>
-                    {questions.map((question, i) => (
+                    {questions?.map((question, i) => (
                       <div key={question.id} className="w-full mb-4">
                         <h3 className="font-bold mb-1">
                           {i + 1}. {question.description}
@@ -160,6 +180,8 @@ const ViewCourse = () => {
                       </div>
                     ))}
                   </div>
+                  {questions?.length > 1 && (
+                    
                   <div className="flex gap-5 items-center justify-between ">
                     <button
                       className="bg-primary text-white px-4 py-2 rounded-lg h-10"
@@ -183,16 +205,21 @@ const ViewCourse = () => {
                       </p>
                     )}
                   </div>
+                  )}
                 </div>
               ) : (
-                <div className="w-full h-full rounded-xl">
+                <div
+                  className="w-full h-full rounded-xl"
+                  onContextMenu={(e) => e.preventDefault()}
+                >
                   <video
+                    key={currentLesson?.videoURL}
                     className="w-full h-full rounded-xl"
                     controls
                     controlsList="nodownload"
+                    disablePictureInPicture
                   >
                     <source
-                      // src="https://www.w3schools.com/html/mov_bbb.mp4"
                       src={`http://localhost:5000${currentLesson?.videoURL}`}
                     />
                   </video>

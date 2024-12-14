@@ -133,6 +133,10 @@ const Courses = () => {
             <select
               id="subCategory"
               className="bg-[#FDE7FF]  text-black text-sm ml-2 font-normal rounded-full block py-2 px-3"
+              value={filters.subCategory}
+              onChange={(e) => {
+                setFilters({ ...filters, subCategory: e.target.value });
+              }}
             >
               <option value="" className="bg-white p-2 shadow-lg rounded-xl">
                 All Sub categories
@@ -184,9 +188,8 @@ const Courses = () => {
               >
                 <div className="relative w-full">
                   <img
-                    className="w-full rounded-2xl"
-                    src="https://instructor-academy.onlinecoursehost.com/content/images/2023/05/101_-What-Online-Courses-Are-Most-In-Demand-In-2023_.jpg"
-                    // src={item?.thumbnailURL}
+                    className="w-full rounded-2xl object-cover h-56 bg-gray-200"
+                    src={`http://localhost:5000/${item?.thumbnailURL}`}
                     alt="Course image preview"
                   />
                   <div className="center !gap-2 lg:gap-3 w-[90%] mx-auto rounded-full p-3 border-[5px] border-white -translate-y-8  bg-[#CC775D] text-white text-xs soft -mb-8">
@@ -208,14 +211,16 @@ const Courses = () => {
                     <h3 className="font-bold text-[#E2508D]">{item?.price}$</h3>
                   </div>
                   <p className="text-gray-500 my-2 text-sm h-14">
-                    {console.log(item)}
                     {/* {item?.objectives?.map((obj, i) => (
                       <span key={i} className="block">
                         {obj},
                       </span>
                     ))} */}
+                    هات الاوبجيكتفز هنا
                   </p>
-                  <span className="text-xs">By: {item?.instructorFullName}</span>
+                  <span className="text-xs">
+                    By: {item?.instructorFullName}
+                  </span>
                   <button
                     onClick={() => {
                       setEnrollPrice(item?.price);
@@ -227,7 +232,7 @@ const Courses = () => {
                     Enroll Now
                   </button>
                   <Link
-                    to={`${item?.id}`}
+                    to={`/academy/courses/${item?.title}/${item?.id}`}
                     className="block text-center text-[#E2508D] border border-[#E2508D] p-3 w-full rounded-full mt-2"
                   >
                     See More

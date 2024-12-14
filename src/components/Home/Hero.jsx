@@ -3,7 +3,7 @@ import hero from "../../assets/hero.png";
 const Hero = () => {
   return (
     <section className="w-full bg-[#1E0C2F] bg-[radial-gradient(circle_at_3%,#AC59FF4D_0,transparent_20%),radial-gradient(circle_at_96%,#AC59FF4D_0,transparent_20%),radial-gradient(circle_at_center_bottom,#AC59FF4D_0,transparent_25%)]">
-      <div className="min-h-[750px] flex items-center justify-between max-w-screen-xl container pt-20 pb-8 lg:gap-8">
+      <div className="min-h-[800px] flex items-center justify-between max-w-screen-xl container pt-20 pb-8 lg:gap-8">
         <div className="">
           <div className=" pr-2 mb-8 lg:mb-0 py-10 md:py-0">
             <p className="text-sm md:text-[16px] text-white mb-3">

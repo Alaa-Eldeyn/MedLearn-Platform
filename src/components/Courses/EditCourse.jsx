@@ -114,6 +114,8 @@ const EditCourse = () => {
     if (res?.isSuccess) {
       let resp = await getOneCourse(params?.id);
       setCourse(resp?.data);
+      console.log("resp", resp);
+      
     }
   };
   const fetchQuestions = async () => {

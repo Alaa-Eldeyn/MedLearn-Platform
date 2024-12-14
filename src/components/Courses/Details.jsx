@@ -1,21 +1,101 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getOneCourse } from "../../utils/courses";
+import { Link, useParams } from "react-router-dom";
+import {
+  getOneCourse,
+  requestLocalEnroll,
+  requestPaypalEnroll,
+  searchForCourse,
+} from "../../utils/courses";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import RelatedCourses from "./RelatedCoures";
+import EnrollModal from "./EnrollModal";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
+import { getUser } from "../../utils/LocalStorage";
 
 const Details = () => {
-  const { id } = useParams();
+  const { name, id } = useParams();
   const [course, setCourse] = useState({});
+  const [enrollPrice, setEnrollPrice] = useState(0);
+  const [enrollModal, setEnrollModal] = useState(false);
+  const [receipt, setReceipt] = useState(null);
+  const [paypalEmail, setPaypalEmail] = useState("");
+  const [isMine, setIsMine] = useState(false);
+
+  const handleLocalPayment = async () => {
+    let { id } = getUser();
+    let data = {
+      InstructorId: course?.instructorId,
+      CourseId: course?.id,
+      StudentId: id,
+      TransactionImage: receipt,
+    };
+    let res = await requestLocalEnroll(data);
+    if (res?.isSuccess) {
+      Swal.fire({
+        icon: "success",
+        title: "Enroll Request Sent",
+        text: res.message,
+        timer: 2000,
+      });
+    } else {
+      toast.error(res.message);
+    }
+  };
+  const handlePaypalPayment = async () => {
+    let user = getUser();
+    let data = {
+      userId: user?.id,
+      subscriberEmail: paypalEmail,
+      subscriberFirstName: user?.firstName,
+      subscriberLastName: user?.lastName,
+    };
+    let res = await requestPaypalEnroll(data);
+    if (res?.isSuccess) {
+      Swal.fire({
+        icon: "success",
+        title: "Enroll Request Sent",
+        text: res.message,
+        timer: 2000,
+      });
+    } else {
+      toast.error(res.message);
+    }
+  };
+
   useEffect(() => {
     const fetchCourse = async () => {
-      let course = await getOneCourse(id);
-      setCourse(course?.data);
+      try {
+        let course = await getOneCourse(id);
+        if (course.isSuccess) {
+          setCourse(course?.data);
+          setIsMine(true);
+        } else {
+          let course = await searchForCourse(name);
+          setCourse(course?.data);
+          setIsMine(false);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     };
     fetchCourse();
   }, [id]);
+
   return (
     <>
+      {enrollModal && (
+        <EnrollModal
+          setEnrollModal={setEnrollModal}
+          enrollPrice={enrollPrice}
+          setReceipt={setReceipt}
+          handleLocalPayment={handleLocalPayment}
+          handlePaypalPayment={handlePaypalPayment}
+          setPaypalEmail={setPaypalEmail}
+          paypalEmail={paypalEmail}
+          receipt={receipt}
+        />
+      )}
       <div className="h-60 bg-[#1F0C30E5]"></div>
       <div className="container flex justify-between -translate-y-10 flex-col-reverse sm:flex-row">
         <div className=" -translate-y-10 sm:translate-y-0">
@@ -46,9 +126,8 @@ const Details = () => {
         <div className="rounded-3xl p-3 overflow-hidden shadow-md border max-w-xs mx-auto sm:mx-0 bg-white -translate-y-20">
           <div className="relative w-full">
             <img
-              className="w-full rounded-2xl"
-              src="https://instructor-academy.onlinecoursehost.com/content/images/2023/05/101_-What-Online-Courses-Are-Most-In-Demand-In-2023_.jpg"
-              // src={course?.thumbnailURL}
+              className="w-full rounded-2xl object-cover h-56 bg-gray-200"
+              src={`http://localhost:5000${course?.thumbnailURL}`}
               alt="Course image preview"
             />
           </div>
@@ -77,12 +156,24 @@ const Details = () => {
                 <span className="line-clamp-1">{course?.subCategoryName}</span>
               </div>
             </div>
-            <button className="center text-white bg-primary p-3 w-full rounded-full mt-3">
-              Enroll Now
-            </button>
-            <button className="block text-center text-[#E2508D] border border-[#E2508D] p-3 w-full rounded-full mt-2">
-              Watch a trial lesson
-            </button>
+            {isMine ? (
+              <Link
+                to={`/academy/my-courses/${id}`}
+                className="center text-white bg-primary p-3 w-full rounded-full mt-3"
+              >
+                Go to Course
+              </Link>
+            ) : (
+              <button
+                onClick={() => {
+                  setEnrollPrice(course?.price);
+                  setEnrollModal(true);
+                }}
+                className="center text-white bg-primary p-3 w-full rounded-full mt-3"
+              >
+                Enroll Now
+              </button>
+            )}
           </div>
         </div>
       </div>
