@@ -4,7 +4,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { useEffect, useState } from "react";
-import { getAllBlogs } from "../../utils/Blogs";
+import { getAllBlogs } from "../../utils/blogs";
 import BlogCard from "./BlogCard";
 
 const RelatedBlogs = () => {

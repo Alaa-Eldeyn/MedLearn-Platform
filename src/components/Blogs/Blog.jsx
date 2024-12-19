@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAllCategories, getAllSubCategories } from "../../utils/categories";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { getAllBlogs } from "../../utils/Blogs";
+import { getAllBlogs } from "../../utils/blogs";
 import BlogCard from "./BlogCard";
 
 const Blog = () => {
