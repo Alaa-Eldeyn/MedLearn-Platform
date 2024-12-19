@@ -79,7 +79,10 @@ const Header = () => {
                 >
                   {user?.imageUrl ? (
                     <img
-                      src={"http://localhost:5000/" + user.imageUrl}
+                      src={
+                        "http://naserehab-001-site1.mtempurl.com/" +
+                        user.imageUrl
+                      }
                       alt=""
                       className="size-7 rounded-full"
                     />
@@ -127,8 +130,11 @@ const Header = () => {
                       type="button"
                       onClick={handleLogout}
                     >
-                      <Icon icon="hugeicons:logout-03" 
-                      className="bg-[#FFEBEB] size-8 p-1 rounded-lg" /> Log out
+                      <Icon
+                        icon="hugeicons:logout-03"
+                        className="bg-[#FFEBEB] size-8 p-1 rounded-lg"
+                      />{" "}
+                      Log out
                     </button>
                   </div>
                 </div>

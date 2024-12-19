@@ -77,27 +77,27 @@ const ViewCourse = () => {
     }
   }, [testMode]);
 
-  // useEffect(() => {
-  //   const handleKeyDown = (e) => {
-  //     if (
-  //       e.key === "F12" || // منع F12
-  //       (e.ctrlKey && e.shiftKey && e.key === "I") || // منع Ctrl+Shift+I
-  //       (e.ctrlKey && e.shiftKey && e.key === "C") || // منع Ctrl+Shift+C
-  //       (e.ctrlKey && e.key === "U") // منع Ctrl+U (عرض السورس كود)
-  //     ) {
-  //       e.preventDefault();
-  //     }
-  //   };
-  //   window.addEventListener("keydown", handleKeyDown);
-  //   const handleContextMenu = (e) => {
-  //     e.preventDefault();
-  //   };
-  //   window.addEventListener("contextmenu", handleContextMenu);
-  //   return () => {
-  //     window.removeEventListener("keydown", handleKeyDown);
-  //     window.removeEventListener("contextmenu", handleContextMenu);
-  //   };
-  // }, []);
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (
+        e.key === "F12" || // منع F12
+        (e.ctrlKey && e.shiftKey && e.key === "I") || // منع Ctrl+Shift+I
+        (e.ctrlKey && e.shiftKey && e.key === "C") || // منع Ctrl+Shift+C
+        (e.ctrlKey && e.key === "U") // منع Ctrl+U (عرض السورس كود)
+      ) {
+        e.preventDefault();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    const handleContextMenu = (e) => {
+      e.preventDefault();
+    };
+    window.addEventListener("contextmenu", handleContextMenu);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("contextmenu", handleContextMenu);
+    };
+  }, []);
 
   return (
     <>
@@ -181,30 +181,29 @@ const ViewCourse = () => {
                     ))}
                   </div>
                   {questions?.length > 1 && (
-                    
-                  <div className="flex gap-5 items-center justify-between ">
-                    <button
-                      className="bg-primary text-white px-4 py-2 rounded-lg h-10"
-                      onClick={calculateScore}
-                    >
-                      Submit
-                    </button>
-                    {score !== null && (
-                      <p>
-                        Your Score: {score} / {questions.length}
-                        <span
-                          className={`${
-                            (score / questions.length) * 100 >= 50
-                              ? "text-green-600"
-                              : "text-red-500"
-                          }`}
-                        >
-                          {" "}
-                          ({((score / questions.length) * 100).toFixed(2)}%)
-                        </span>
-                      </p>
-                    )}
-                  </div>
+                    <div className="flex gap-5 items-center justify-between ">
+                      <button
+                        className="bg-primary text-white px-4 py-2 rounded-lg h-10"
+                        onClick={calculateScore}
+                      >
+                        Submit
+                      </button>
+                      {score !== null && (
+                        <p>
+                          Your Score: {score} / {questions.length}
+                          <span
+                            className={`${
+                              (score / questions.length) * 100 >= 50
+                                ? "text-green-600"
+                                : "text-red-500"
+                            }`}
+                          >
+                            {" "}
+                            ({((score / questions.length) * 100).toFixed(2)}%)
+                          </span>
+                        </p>
+                      )}
+                    </div>
                   )}
                 </div>
               ) : (
@@ -220,7 +219,7 @@ const ViewCourse = () => {
                     disablePictureInPicture
                   >
                     <source
-                      src={`http://localhost:5000${currentLesson?.videoURL}`}
+                      src={`http://naserehab-001-site1.mtempurl.com${currentLesson?.videoURL}`}
                     />
                   </video>
                 </div>

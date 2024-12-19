@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getToken } from "./LocalStorage";
 
-const apiUrl = "http://localhost:5000/api";
+const apiUrl = "http://naserehab-001-site1.mtempurl.com/api";
 
 const customAxios = axios.create({
   baseURL: apiUrl,

@@ -6,7 +6,7 @@ const BlogCard = ({ blog }) => {
       <div className="relative">
         <img
           className="rounded-3xl h-56 bg-gray-200 "
-          src={`http://localhost:5000${blog?.imageURL}`}
+          src={`http://naserehab-001-site1.mtempurl.com${blog?.imageURL}`}
           alt={blog.title || "Blog Image"}
         />
       </div>

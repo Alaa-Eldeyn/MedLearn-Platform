@@ -33,7 +33,7 @@ const Book = () => {
     console.log(filters);
   };
   console.log(books);
-  
+
   return (
     <>
       <div className="center mx-auto w-[90%] lg:w-fit flex-col lg:flex-row flex-wrap ">
@@ -97,7 +97,7 @@ const Book = () => {
             {books?.map((book) => (
               <div key={book.id} className="bg-white rounded-xl shadow-md p-4">
                 <img
-                  src={`http://localhost:5000${book?.thumbnailURL}`}
+                  src={`http://naserehab-001-site1.mtempurl.com${book?.thumbnailURL}`}
                   alt=""
                   className="h-96 w-full bg-gray-200 rounded-lg"
                 />

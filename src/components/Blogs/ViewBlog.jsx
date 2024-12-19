@@ -39,7 +39,7 @@ const ViewBlog = () => {
         </h1>
         <div className="relative w-full h-96 bg-gray-200 rounded-3xl overflow-hidden">
           <img
-            src={`http://localhost:5000${blog?.imageURL}`}
+            src={`http://naserehab-001-site1.mtempurl.com${blog?.imageURL}`}
             alt=""
             className="w-full object-cover"
             loading="lazy"
@@ -69,7 +69,7 @@ const ViewBlog = () => {
             <p>{blog?.conclusion}</p>
           </div>
         </div>
-      <RelatedBlogs />
+        <RelatedBlogs />
       </div>
     </>
   );

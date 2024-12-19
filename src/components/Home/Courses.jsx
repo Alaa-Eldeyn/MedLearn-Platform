@@ -43,11 +43,11 @@ const Courses = ({ courses }) => {
                     <h3 className="font-bold text-[#E2508D]">{item?.price}$</h3>
                   </div>
                   <p className="text-gray-500 my-2 text-sm h-14">
-                    {item?.objectives?.map((obj, i) => (
+                    {/* {item?.objectives?.map((obj, i) => (
                       <span key={i} className="block">
                         {obj},
                       </span>
-                    ))}
+                    ))} */}
                   </p>
                   <span className="text-xs">
                     By: {item?.instructorFullName}

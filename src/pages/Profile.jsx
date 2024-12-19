@@ -97,7 +97,10 @@ const Profile = () => {
                       }}
                     />
                     <img
-                      src={"http://localhost:5000/" + photoPreview}
+                      src={
+                        "http://naserehab-001-site1.mtempurl.com/" +
+                        photoPreview
+                      }
                       alt="user profile"
                       className="rounded-full size-32 object-cover"
                     />

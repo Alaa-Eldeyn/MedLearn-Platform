@@ -189,7 +189,7 @@ const Courses = () => {
                 <div className="relative w-full">
                   <img
                     className="w-full rounded-2xl object-cover h-56 bg-gray-200"
-                    src={`http://localhost:5000/${item?.thumbnailURL}`}
+                    src={`http://naserehab-001-site1.mtempurl.com/${item?.thumbnailURL}`}
                     alt="Course image preview"
                   />
                   <div className="center !gap-2 lg:gap-3 w-[90%] mx-auto rounded-full p-3 border-[5px] border-white -translate-y-8  bg-[#CC775D] text-white text-xs soft -mb-8">

@@ -7,7 +7,7 @@ const CourseCard = ({ course }) => {
       <div className="relative w-full">
         <img
           className="w-full rounded-2xl min-h-52 bg-gray-200"
-          src={`http://localhost:5000/${course?.thumbnailURL}`}
+          src={`http://naserehab-001-site1.mtempurl.com/${course?.thumbnailURL}`}
           alt="Course image preview"
         />
         <div className="center !gap-2 lg:gap-3 w-[90%] mx-auto rounded-full p-3 border-[5px] border-white -translate-y-8  bg-[#CC775D] text-white text-xs soft -mb-8">
@@ -27,7 +27,8 @@ const CourseCard = ({ course }) => {
           <h3 className="font-bold text-[#E2508D]">{course?.price}$</h3>
         </div>
         <p className="text-gray-500 my-2 text-sm h-14">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dicta, alias?
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dicta,
+          alias?
         </p>
         <span className="text-xs">{course?.instructorFullName}</span>
         <button className="center text-white bg-primary p-3 w-full rounded-full mt-3">

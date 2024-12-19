@@ -127,7 +127,7 @@ const Details = () => {
           <div className="relative w-full">
             <img
               className="w-full rounded-2xl object-cover h-56 bg-gray-200"
-              src={`http://localhost:5000${course?.thumbnailURL}`}
+              src={`${course?.thumbnailURL}`}
               alt="Course image preview"
             />
           </div>

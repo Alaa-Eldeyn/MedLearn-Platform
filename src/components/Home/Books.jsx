@@ -36,7 +36,7 @@ const Books = ({ books }) => {
                   className="h-48 rounded-lg overflow-hidden"
                 >
                   <img
-                    src={`http://localhost:5000${book?.thumbnailURL}`}
+                    src={`${book?.thumbnailURL}`}
                     alt={book?.title}
                     className="h-full w-full object-cover rounded-lg"
                   />
