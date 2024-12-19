@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import doc from "../../assets/doc.png";
 import { useEffect, useState } from "react";
-import { getBlog } from "../../utils/Blogs";
+import { getBlog } from "../../utils/blogs";
 import { getAllCategories, getAllSubCategories } from "../../utils/categories";
 import RelatedBlogs from "./RelatedBlogs";
 const ViewBlog = () => {
