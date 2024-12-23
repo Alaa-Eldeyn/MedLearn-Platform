@@ -13,7 +13,7 @@ const ResetPass = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(resetPassSchema),
   });
@@ -113,9 +113,9 @@ const ResetPass = () => {
                   type="button"
                   onClick={handleSubmit(handleResetPass)}
                   className="w-full py-3 px-6 text-lg tracking-wide font-bold rounded-xl text-white bg-primary focus:outline-none soft"
-                  disabled={!email || !token}
+                  disabled={!email || !token || isSubmitting}
                 >
-                  Reset Password
+                  {isSubmitting ? "Resetting..." : "Reset Password"}
                 </button>
               </div>
             </form>

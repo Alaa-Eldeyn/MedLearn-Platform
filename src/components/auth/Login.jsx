@@ -83,7 +83,7 @@ const Login = () => {
                 disabled={isSubmitting}
                 className="w-full py-2 px-6 text-lg tracking-wide font-bold rounded-xl text-white bg-primary focus:outline-none soft"
               >
-                Sign In
+                {isSubmitting ? "Logging In..." : "Login"}
               </button>
               <div className="w-full flex justify-center my-6 font-bold text-lg">
                 <span>

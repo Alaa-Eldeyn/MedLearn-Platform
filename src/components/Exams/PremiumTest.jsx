@@ -119,7 +119,7 @@ const PremiumTest = () => {
         />
       ) : (
         <>
-          <div className="flex gap-5 flex-wrap pt-10 pb-20 container !select-none">
+          <div className="flex gap-x-12 py-20 container">
             <div className="rounded-xl bg-white p-5 border-2 border-[#EC8AB3] h-96 md:w-[460px] ">
               <h2 className="font-bold">
                 Questions {`(${questions?.length})`}
@@ -158,7 +158,7 @@ const PremiumTest = () => {
                   <div
                     key={question.id}
                     onClick={() => setCurrentQuestionIndex(i)}
-                    className={`flex items-center gap-2 rounded-lg  border-2 border-transparent bg-gray-50 py-3 px-2 cursor-pointer hover:bg-[#FFF4F9]
+                    className={`flex items-center gap-2 rounded-lg border-2 border-transparent bg-gray-50 py-3 px-2 cursor-pointer hover:bg-[#FFF4F9]
                 ${
                   currentQuestionIndex === i && "bg-[#FFF4F9] !border-[#EC8AB3]"
                 }
@@ -166,18 +166,18 @@ const PremiumTest = () => {
                   >
                     <Icon
                       icon="icon-park-outline:dot"
-                      className={`text-2xl ${
+                      className={`text-2xl !size-4 ${
                         question.userAnswer ? "!text-[#EC8AB3]" : " !text-black"
                       }`}
                     />
-                    <div className="line-clamp-1">
+                    <p className="line-clamp-1 flex-1">
                       {`${question.id}. `} {question.description}
-                    </div>
+                    </p>
                   </div>
                 ))}
               </div>
             </div>
-            <div>
+            <div className="flex-1">
               {/* Current Question and Answer Options */}
               <div>
                 <h3 className="font-bold text-xl mb-3">
@@ -185,7 +185,10 @@ const PremiumTest = () => {
                   {questions[currentQuestionIndex]?.description}
                 </h3>
                 {questions[currentQuestionIndex]?.answers.map((answer) => (
-                  <label key={answer.id} className="block py-2 cursor-pointer">
+                  <label
+                    key={answer.id}
+                    className="flex gap-3 py-2 cursor-pointer"
+                  >
                     <input
                       type="radio"
                       name={`question-${questions[currentQuestionIndex].id}`}
@@ -195,13 +198,10 @@ const PremiumTest = () => {
                       }
                       onChange={() => handleAnswer(answer.id)}
                     />
-                    <span className="inline-block ml-4  py-1">
-                      {answer.description}
-                    </span>
+                    <span className="py-1">{answer.description}</span>
                   </label>
                 ))}
               </div>
-
               {/* Navigation Buttons */}
               <div className="space-x-3 mt-5">
                 {currentQuestionIndex === questions.length - 1 ? (
