@@ -1,5 +1,4 @@
 [[redirects]]
-from = "/api/*"
-to = "http://naserehab-001-site1.mtempurl.com/api/:splat"
+from = "/*"
+to = "index.html"
 status = 200
-force = true
