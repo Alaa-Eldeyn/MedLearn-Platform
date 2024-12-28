@@ -1,0 +1,5 @@
+[[redirects]]
+from = "/api/*"
+to = "http://naserehab-001-site1.mtempurl.com/api/:splat"
+status = 200
+force = true
