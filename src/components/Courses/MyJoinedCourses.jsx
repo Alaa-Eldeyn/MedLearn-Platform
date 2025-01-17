@@ -64,13 +64,18 @@ const MyJoinedCourses = () => {
                       </h3>
                     </div>
                     <p className="text-gray-500 my-2 text-sm h-14">
-                      {item?.objectives?.map((obj, i) => (
-                        <span key={i} className="block">
-                          {obj},
-                        </span>
-                      ))}
+                      {item?.objectives?.map((obj) => {
+                        return `${obj.description}${
+                          item?.objectives?.indexOf(obj) ===
+                          item?.objectives?.length - 1
+                            ? "."
+                            : ","
+                        }`;
+                      })}
                     </p>
-                    <span className="text-xs">By: {item?.instructorFullName}</span>
+                    <span className="text-xs">
+                      By: {item?.instructorFullName}
+                    </span>
                     <Link
                       to={`${item?.id}`}
                       className="center text-white bg-primary p-3 w-full rounded-full mt-3"

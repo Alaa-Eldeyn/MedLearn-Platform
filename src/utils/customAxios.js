@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getToken } from "./LocalStorage";
 
-const apiUrl = "http://naserehab-001-site1.mtempurl.com/api";
+const apiUrl = `${import.meta.env.VITE_BASE_URL}/api`;
 
 const customAxios = axios.create({
   baseURL: apiUrl,

@@ -115,7 +115,6 @@ const EditCourse = () => {
       let resp = await getOneCourse(params?.id);
       setCourse(resp?.data);
       console.log("resp", resp);
-      
     }
   };
   const fetchQuestions = async () => {
@@ -172,6 +171,8 @@ const EditCourse = () => {
   useEffect(() => {
     const fetchCourse = async () => {
       let res = await getOneCourse(params?.id);
+      console.log(res);
+
       if (res?.isSuccess) {
         setCourse(res?.data);
         setValue("title", res?.data?.title);
@@ -403,7 +404,7 @@ const EditCourse = () => {
                         key={i}
                         className="flex justify-between rounded-lg border font-bold border-primary py-2 px-4 text-primary"
                       >
-                        <span>{req}</span>
+                        <span>{req.description}</span>
                         <button
                           onClick={(e) => {
                             e.preventDefault();
@@ -411,6 +412,7 @@ const EditCourse = () => {
                               requirements.filter((_, index) => index !== i)
                             );
                           }}
+                          disabled={!editInfo}
                         >
                           <Icon
                             icon="solar:close-square-bold"
@@ -449,7 +451,7 @@ const EditCourse = () => {
                         key={i}
                         className="flex justify-between rounded-lg border font-bold border-primary py-2 px-4 text-primary"
                       >
-                        <span>{obj}</span>
+                        <span>{obj.description}</span>
                         <button
                           onClick={(e) => {
                             e.preventDefault();
@@ -457,6 +459,7 @@ const EditCourse = () => {
                               objectives.filter((_, index) => index !== i)
                             );
                           }}
+                          disabled={!editInfo}
                         >
                           <Icon
                             icon="solar:close-square-bold"

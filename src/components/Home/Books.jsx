@@ -36,7 +36,7 @@ const Books = ({ books }) => {
                   className="h-48 rounded-lg overflow-hidden"
                 >
                   <img
-                    src={`${book?.thumbnailURL}`}
+                    src={`${import.meta.env.VITE_BASE_URL}/${book?.thumbnailURL}`}
                     alt={book?.title}
                     className="h-full w-full object-cover rounded-lg"
                   />

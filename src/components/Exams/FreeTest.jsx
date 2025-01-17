@@ -70,15 +70,13 @@ const FreeTest = () => {
       subscriberLastName: user?.lastName,
     };
     let res = await requestPaypalEnroll(data);
-    console.log(res);
-
     if (res?.isSuccess) {
-      Swal.fire({
-        icon: "success",
-        title: "Enroll Request Sent",
-        text: res.message,
-        timer: 2000,
-      });
+      const approveLink = res.data.links.find((link) => link.rel === "approve");
+      if (approveLink && approveLink.href) {
+        window.location.href = approveLink.href;
+      } else {
+        toast.error("Something went wrong. Please try again later.");
+      }
     } else {
       toast.error(res.message);
     }
@@ -176,6 +174,7 @@ const FreeTest = () => {
             resetTest,
             setSubscriptionModal,
             isFree: true,
+            setTestDone,
           }}
         />
       ) : (
@@ -279,9 +278,7 @@ const FreeTest = () => {
                         }
                         onChange={() => handleAnswer(answer.id)}
                       />
-                      <span className="py-1">
-                        {answer.description}
-                      </span>
+                      <span className="py-1">{answer.description}</span>
                     </label>
                   ))}
                 </div>

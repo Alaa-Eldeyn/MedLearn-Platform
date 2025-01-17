@@ -5,6 +5,8 @@ import { addToken, addUser } from "./LocalStorage";
 import Swal from "sweetalert2";
 import customAxios from "./customAxios";
 
+let baseURL = import.meta.env.VITE_BASE_URL;
+
 const SignupSchema = z
   .object({
     firstName: z.string().min(1, "First name is required"),
@@ -115,7 +117,7 @@ const resetPassSchema = z
 const signUp = async (data) => {
   try {
     const response = await axios.post(
-      "http://naserehab-001-site1.mtempurl.com/api/User/register",
+      `${baseURL}/api/User/register`,
       {
         ...data,
       }
@@ -140,7 +142,7 @@ const signUp = async (data) => {
 const logIn = async (data) => {
   try {
     const response = await axios.post(
-      "http://naserehab-001-site1.mtempurl.com/api/User/login",
+      `${baseURL}/api/User/login`,
       data
     );
     if (response?.data?.isSuccess) {
@@ -165,7 +167,7 @@ const logIn = async (data) => {
 const forgetPass = async (email) => {
   try {
     const res = await axios.post(
-      `http://naserehab-001-site1.mtempurl.com/api/User/forgot-password`,
+      `${baseURL}/api/User/forgot-password`,
       {
         email: email,
       }
@@ -191,7 +193,7 @@ const forgetPass = async (email) => {
 const resetPassword = async (data) => {
   try {
     const res = await axios.post(
-      `http://naserehab-001-site1.mtempurl.com/api/User/reset-password`,
+      `${baseURL}/api/User/reset-password`,
       {
         email: data?.email,
         token: data?.token,

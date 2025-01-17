@@ -3,7 +3,7 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    "node_modules/preline/dist/*.js",
+    "./node_modules/preline/preline.js",
   ],
   theme: {
     extend: {
@@ -14,9 +14,11 @@ export default {
       container: {
         center: true,
         padding: "1rem",
+      },
+      screens: {
+        "2xl": "1200px",
       }
     },
   },
-  // eslint-disable-next-line no-undef
   plugins: [require("preline/plugin")],
 };

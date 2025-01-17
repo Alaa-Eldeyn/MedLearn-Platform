@@ -1,4 +1,5 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { Link } from "react-router-dom";
 
 const TestDone = ({
   scorePercentage,
@@ -6,6 +7,7 @@ const TestDone = ({
   questions,
   resetTest,
   setSubscriptionModal,
+  setTestDone,
   isFree,
 }) => {
   return (
@@ -45,9 +47,12 @@ const TestDone = ({
               momentum and take your learning to the next level!
             </p>
             <div className="flex gap-3">
-              <button className="px-5 py-2 rounded-lg soft bg-[#984D9F] text-white">
+              <Link
+                to={isFree ? "/academy/free-exams" : "/academy/premium-exams"}
+                className="px-5 py-2 rounded-lg soft bg-[#984D9F] text-white"
+              >
                 Got it
-              </button>
+              </Link>
               <button
                 onClick={() => resetTest()}
                 className="px-5 py-2 rounded-lg soft bg-[#FAEBF1]"
@@ -57,7 +62,10 @@ const TestDone = ({
             </div>
             {isFree && (
               <button
-                onClick={() => setSubscriptionModal(true)}
+                onClick={() => {
+                  setTestDone(false);
+                  setSubscriptionModal(true);
+                }}
                 className="group text-[#E2508D] center !gap-2 font-bold"
               >
                 Upgrade for More Questions
@@ -113,7 +121,10 @@ const TestDone = ({
             </div>
             {isFree && (
               <button
-                onClick={() => setSubscriptionModal(true)}
+                onClick={() => {
+                  setTestDone(false);
+                  setSubscriptionModal(true);
+                }}
                 className="group text-[#E2508D] center !gap-2 font-bold"
               >
                 Upgrade for More Questions

@@ -52,12 +52,12 @@ const Details = () => {
     };
     let res = await requestPaypalEnroll(data);
     if (res?.isSuccess) {
-      Swal.fire({
-        icon: "success",
-        title: "Enroll Request Sent",
-        text: res.message,
-        timer: 2000,
-      });
+      const approveLink = res.data.links.find((link) => link.rel === "approve");
+      if (approveLink && approveLink.href) {
+        window.location.href = approveLink.href;
+      } else {
+        toast.error("Something went wrong. Please try again later.");
+      }
     } else {
       toast.error(res.message);
     }
@@ -67,20 +67,26 @@ const Details = () => {
     const fetchCourse = async () => {
       try {
         let course = await getOneCourse(id);
-        if (course.isSuccess) {
+        if (course?.isSuccess) {
           setCourse(course?.data);
           setIsMine(true);
-        } else {
+        }
+      } catch (error) {
+        console.error(error);
+      }
+
+      if (!course?.isSuccess) {
+        try {
           let course = await searchForCourse(name);
           setCourse(course?.data);
           setIsMine(false);
+        } catch (error) {
+          console.log(error);
         }
-      } catch (error) {
-        console.log(error);
       }
     };
     fetchCourse();
-  }, [id]);
+  }, [name, id]);
 
   return (
     <>
@@ -127,7 +133,7 @@ const Details = () => {
           <div className="relative w-full">
             <img
               className="w-full rounded-2xl object-cover h-56 bg-gray-200"
-              src={`${course?.thumbnailURL}`}
+              src={`${import.meta.env.VITE_BASE_URL}/${course?.thumbnailURL}`}
               alt="Course image preview"
             />
           </div>
@@ -178,7 +184,7 @@ const Details = () => {
         </div>
       </div>
       <div className="container">
-        <RelatedCourses />
+        <RelatedCourses/>
       </div>
     </>
   );

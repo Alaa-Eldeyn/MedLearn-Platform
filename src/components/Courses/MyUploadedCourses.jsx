@@ -16,6 +16,7 @@ const MyUploadedCourses = () => {
       let res = await getUploadedCourses(id);
       if (res?.isSuccess) {
         setCourses(res?.data);
+        console.log(res?.data);
       }
     };
     fetchCourses();
@@ -51,19 +52,24 @@ const MyUploadedCourses = () => {
                 >
                   <div className="relative w-full">
                     <img
-                      className="w-full rounded-2xl"
-                      src="https://instructor-academy.onlinecoursehost.com/content/images/2023/05/101_-What-Online-Courses-Are-Most-In-Demand-In-2023_.jpg"
-                      // src={item?.thumbnailURL}
+                      className="w-full rounded-2xl h-52 bg-gray-200"
+                      src={`${import.meta.env.VITE_BASE_URL}/${
+                        item?.thumbnailURL
+                      }`}
                       alt="Course image preview"
                     />
-                    <div className="flex items-center gap-2 lg:gap-5 w-[90%] mx-auto rounded-full px pt-3  text-[#CC775D] text-sm soft">
+                    <div className="center !gap-2 lg:gap-3 w-[90%] mx-auto rounded-full p-3 border-[5px] border-white -translate-y-8  bg-[#CC775D] text-white text-xs soft -mb-8">
                       <div className="center !gap-1">
-                        <Icon icon="stash:person" />
-                        <span className="line-clamp-1">24</span>
+                        <Icon icon="mdi:category-plus" />
+                        <span className="line-clamp-1">
+                          {item?.categoryName}
+                        </span>
                       </div>
                       <div className="center !gap-1">
-                        <Icon icon="hugeicons:coins-01" />
-                        <span className="line-clamp-1">1500$</span>
+                        <Icon icon="mdi:category-plus" />
+                        <span className="line-clamp-1">
+                          {item?.subCategoryName}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -75,10 +81,14 @@ const MyUploadedCourses = () => {
                       </h3>
                     </div>
                     <p className="text-gray-500 my-2 text-sm h-14">
-                      Deepen your understanding of advanced cardiovascular
-                      treatments and diagnostic techniques.
+                      {item?.objectives?.map((obj) => {
+                        return `${obj.description}${item?.objectives?.indexOf(obj) === item?.objectives?.length - 1 ? '.' : ','}`
+                      })}
                     </p>
                     <span className="text-xs">{item?.instructorFullName}</span>
+                    <button className="center text-white bg-primary p-3 w-full rounded-full mt-3">
+                      Enroll Now
+                    </button>
                     <div className="center !gap-2 mt-5">
                       <Link
                         to={`/academy/update-course/${item?.id}`}

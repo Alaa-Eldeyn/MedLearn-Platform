@@ -96,7 +96,9 @@ const EnrollModal = ({
                   >
                     {tooltip && (
                       <span className="absolute bg-gray-500 p-1 rounded-lg w-56 bottom-5 right-0 opacity-90">
-                        make sure to use the same email you used for your paypal
+                        - PAYPAL ADD 6% FEE.
+                        <br />- Make sure to use the same email you used for
+                        your paypal.
                       </span>
                     )}
                     ?
@@ -122,10 +124,16 @@ const EnrollModal = ({
                   className="bg-[#E2508D] text-white rounded-full px-10 py-3"
                   disabled={isLoading}
                   onClick={async () => {
-                    setIsLoading(true); 
-                    await handlePaypalPayment();
-                    setIsLoading(false); 
-                    setEnrollModal(false);
+                    if (paypalEmail.length === 0) {
+                      toast.error("Please enter your email");
+                      return;
+                    }
+                    if (paypalEmail) {
+                      setIsLoading(true);
+                      await handlePaypalPayment();
+                      setIsLoading(false);
+                      setEnrollModal(false);
+                    }
                   }}
                 >
                   {isLoading ? "Loading..." : "Pay"}

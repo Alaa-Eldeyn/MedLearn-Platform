@@ -56,7 +56,7 @@ const Courses = ({ courses }) => {
                     Enroll Now
                   </button> */}
                   <Link
-                    to={`/academy/courses/${item?.id}`}
+                    to={`/academy/courses/${item?.categoryName}/${item?.id}`}
                     className="block text-center text-[#E2508D] hover:text-white hover:bg-[#E2508D] soft border border-[#E2508D] p-3 w-full rounded-full mt-2"
                   >
                     See More

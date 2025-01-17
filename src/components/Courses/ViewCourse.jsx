@@ -219,7 +219,9 @@ const ViewCourse = () => {
                     disablePictureInPicture
                   >
                     <source
-                      src={`http://naserehab-001-site1.mtempurl.com${currentLesson?.videoURL}`}
+                      src={`${import.meta.env.VITE_BASE_URL}${
+                        currentLesson?.videoURL
+                      }`}
                     />
                   </video>
                 </div>

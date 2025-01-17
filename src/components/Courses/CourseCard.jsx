@@ -6,8 +6,8 @@ const CourseCard = ({ course }) => {
     <div className="rounded-3xl p-3 overflow-hidden shadow-md border">
       <div className="relative w-full">
         <img
-          className="w-full rounded-2xl min-h-52 bg-gray-200"
-          src={`http://naserehab-001-site1.mtempurl.com/${course?.thumbnailURL}`}
+          className="w-full rounded-2xl h-52 bg-gray-200"
+          src={`${import.meta.env.VITE_BASE_URL}/${course?.thumbnailURL}`}
           alt="Course image preview"
         />
         <div className="center !gap-2 lg:gap-3 w-[90%] mx-auto rounded-full p-3 border-[5px] border-white -translate-y-8  bg-[#CC775D] text-white text-xs soft -mb-8">
@@ -27,8 +27,13 @@ const CourseCard = ({ course }) => {
           <h3 className="font-bold text-[#E2508D]">{course?.price}$</h3>
         </div>
         <p className="text-gray-500 my-2 text-sm h-14">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dicta,
-          alias?
+          {course?.objectives?.map((obj) => {
+            return `${obj.description}${
+              course?.objectives?.indexOf(obj) === course?.objectives?.length - 1
+                ? "."
+                : ","
+            }`;
+          })}
         </p>
         <span className="text-xs">{course?.instructorFullName}</span>
         <button className="center text-white bg-primary p-3 w-full rounded-full mt-3">

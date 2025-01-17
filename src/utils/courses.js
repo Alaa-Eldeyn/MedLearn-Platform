@@ -32,8 +32,6 @@ const getUploadedCourses = async (instructorId) => {
 };
 
 const getFilteredCourses = async (filters) => {
-  console.log(filters);
-
   try {
     let response = await customAxios.get("/Course/FilteredCourses", {
       params: filters,
@@ -428,6 +426,7 @@ const requestPaypalEnroll = async (data) => {
     return { isSuccess: false };
   }
 };
+
 const searchForCourse = async (courseTitle) => {
   try {
     let response = await customAxios.get(`/Course/Search/${courseTitle}`);

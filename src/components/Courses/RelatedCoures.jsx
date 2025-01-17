@@ -4,8 +4,19 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import CourseCard from "./CourseCard";
+import { getAllCourses } from "../../utils/courses";
+import { useEffect, useState } from "react";
 
 const RelatedCourses = () => {
+  const [relatedCourses, setRelatedCourses] = useState([]);
+  const fetchCourses = async () => {
+    let res = await getAllCourses();
+    setRelatedCourses(res?.data);
+  };
+  useEffect(() => {
+    fetchCourses();
+  }, []);
+
   return (
     <div className="-translate-y-10 pb-10">
       <div className="w-full">
@@ -36,7 +47,7 @@ const RelatedCourses = () => {
         }}
         className="px-10 select-none py-2"
       >
-        {["a", "f", "f", "a", "f", "f"].map((item, index) => {
+        {relatedCourses?.map((item, index) => {
           return (
             <SwiperSlide key={index}>
               <CourseCard course={item} />

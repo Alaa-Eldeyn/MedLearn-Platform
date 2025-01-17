@@ -76,12 +76,12 @@ const Courses = () => {
     };
     let res = await requestPaypalEnroll(data);
     if (res?.isSuccess) {
-      Swal.fire({
-        icon: "success",
-        title: "Enroll Request Sent",
-        text: res.message,
-        timer: 2000,
-      });
+      const approveLink = res.data.links.find((link) => link.rel === "approve");
+      if (approveLink && approveLink.href) {
+        window.location.href = approveLink.href;
+      } else {
+        toast.error("Something went wrong. Please try again later.");
+      }
     } else {
       toast.error(res.message);
     }
@@ -189,7 +189,9 @@ const Courses = () => {
                 <div className="relative w-full">
                   <img
                     className="w-full rounded-2xl object-cover h-56 bg-gray-200"
-                    src={`http://naserehab-001-site1.mtempurl.com/${item?.thumbnailURL}`}
+                    src={`${import.meta.env.VITE_BASE_URL}/${
+                      item?.thumbnailURL
+                    }`}
                     alt="Course image preview"
                   />
                   <div className="center !gap-2 lg:gap-3 w-[90%] mx-auto rounded-full p-3 border-[5px] border-white -translate-y-8  bg-[#CC775D] text-white text-xs soft -mb-8">
@@ -210,13 +212,16 @@ const Courses = () => {
                     <h2 className="line-clamp-1">{item?.title}</h2>
                     <h3 className="font-bold text-[#E2508D]">{item?.price}$</h3>
                   </div>
-                  <p className="text-gray-500 my-2 text-sm h-14">
-                    {/* {item?.objectives?.map((obj, i) => (
+                  <p className="text-gray-500 my-2 text-sm h-14 line-clamp-3">
+                    {item?.objectives?.map((obj, i) => (
                       <span key={i} className="block">
-                        {obj},
+                        {obj.description}
+                        {item?.objectives?.indexOf(obj) ===
+                        item?.objectives?.length - 1
+                          ? "."
+                          : ","}
                       </span>
-                    ))} */}
-                    هات الاوبجيكتفز هنا
+                    ))}
                   </p>
                   <span className="text-xs">
                     By: {item?.instructorFullName}

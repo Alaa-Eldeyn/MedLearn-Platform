@@ -6,6 +6,12 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 const Header = () => {
   const [user, setUser] = useState(null);
   const [isScrolled, setIsScrolled] = useState(true);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   const token = getToken();
   const navigate = useNavigate();
 
@@ -65,78 +71,76 @@ const Header = () => {
         >
           {`Practice 2 Pass`}
         </Link>
-        <div className="md:order-3 flex items-center gap-x-2">
+        <div className="md:order-3 flex items-center gap-x-2 relative">
           {user ? (
             <>
-              <div className="hs-dropdown relative inline-flex">
-                <button
-                  id="hs-dropdown-default"
-                  type="button"
-                  className="hs-dropdown-toggle inline-flex items-center gap-x-2 text-sm font-medium rounded-lg text-white shadow-sm focus:outline-none disabled:opacity-50 disabled:pointer-events-none"
-                  aria-haspopup="menu"
-                  aria-expanded="false"
-                  aria-label="Dropdown"
+              <button
+                type="button"
+                className="flex items-center gap-x-2 text-sm font-medium rounded-lg text-white shadow-sm focus:outline-none"
+                onClick={toggleDropdown}
+                aria-haspopup="menu"
+                aria-expanded={isDropdownOpen}
+              >
+                {user?.imageUrl ? (
+                  <img
+                    src={`${import.meta.env.VITE_BASE_URL}/${user.imageUrl}`}
+                    alt="User"
+                    className="w-7 h-7 rounded-full"
+                  />
+                ) : (
+                  <Icon icon="gridicons:user-circle" className="w-7 h-7" />
+                )}
+                <span className="text-xs sm:text-md">
+                  {user?.firstName} {user?.lastName}
+                </span>
+                <svg
+                  className={`w-4 h-4 transition-transform duration-300 ${
+                    isDropdownOpen ? "rotate-180" : "rotate-0"
+                  }`}
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
                 >
-                  {user?.imageUrl ? (
-                    <img
-                      src={
-                        "http://naserehab-001-site1.mtempurl.com/" +
-                        user.imageUrl
-                      }
-                      alt=""
-                      className="size-7 rounded-full"
-                    />
-                  ) : (
-                    <Icon icon="gridicons:user-circle" className="size-7" />
-                  )}
-                  <span className="text-xs sm:text-md">
-                    {user?.firstName + " " + user?.lastName}
-                  </span>
-                  <svg
-                    className="hs-dropdown-open:rotate-180 size-4 soft"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
+                  <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                  >
-                    <path d="m6 9 6 6 6-6" />
-                  </svg>
-                </button>
+                    d="M6 9l6 6 6-6"
+                  />
+                </svg>
+              </button>
 
-                <div
-                  className="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-48 bg-white shadow-md rounded-lg mt-2 p-2 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full"
-                  role="menu"
-                  aria-orientation="vertical"
-                  aria-labelledby="hs-dropdown-default"
-                >
-                  <div className="p-1">
-                    <Link
-                      className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm hover:bg-gray-50 focus:outline-none"
-                      to="/academy/profile"
-                    >
-                      <Icon
-                        icon="solar:user-linear"
-                        className="bg-[#F5EDFE] size-8 p-1 rounded-lg"
-                      />
-                      My Profile
-                    </Link>
-                    <button
-                      className="flex w-full items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-[#CF4646] hover:bg-gray-50 focus:outline-none"
-                      type="button"
-                      onClick={handleLogout}
-                    >
-                      <Icon
-                        icon="hugeicons:logout-03"
-                        className="bg-[#FFEBEB] size-8 p-1 rounded-lg"
-                      />{" "}
-                      Log out
-                    </button>
-                  </div>
+              {/* قائمة الخيارات */}
+              <div
+                className={`absolute right-0 mt-2 w-48 bg-white shadow-md rounded-lg transition-all duration-300 ${
+                  isDropdownOpen
+                    ? "!opacity-100 !translate-y-20 !visible"
+                    : "!opacity-0 !translate-y-24 !invisible"
+                }`}
+                role="menu"
+              >
+                <div className="p-1">
+                  <Link
+                    to="/academy/profile"
+                    className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm hover:bg-gray-50 focus:outline-none"
+                  >
+                    <Icon
+                      icon="solar:user-linear"
+                      className="bg-purple-100 w-8 h-8 p-1 rounded-lg"
+                    /> 
+                    My Profile
+                  </Link>
+                  <button
+                    type="button"
+                    className="flex w-full items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-red-600 hover:bg-gray-50 focus:outline-none"
+                    onClick={handleLogout}
+                  >
+                    <Icon
+                      icon="hugeicons:logout-03"
+                      className="bg-red-100 w-8 h-8 p-1 rounded-lg"
+                    />Logout
+                  </button>
                 </div>
               </div>
             </>

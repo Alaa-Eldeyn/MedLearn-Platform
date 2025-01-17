@@ -88,12 +88,12 @@ const Exam = ({ isFree }) => {
     };
     let res = await requestPaypalEnroll(data);
     if (res?.isSuccess) {
-      Swal.fire({
-        icon: "success",
-        title: "Enroll Request Sent",
-        text: res.message,
-        timer: 2000,
-      });
+      const approveLink = res.data.links.find((link) => link.rel === "approve");
+      if (approveLink && approveLink.href) {
+        window.location.href = approveLink.href;
+      } else {
+        toast.error("Something went wrong. Please try again later.");
+      }
     } else {
       toast.error(res.message);
     }

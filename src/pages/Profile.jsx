@@ -97,10 +97,7 @@ const Profile = () => {
                       }}
                     />
                     <img
-                      src={
-                        "http://naserehab-001-site1.mtempurl.com/" +
-                        photoPreview
-                      }
+                      src={import.meta.env.VITE_BASE_URL + "/" + photoPreview}
                       alt="user profile"
                       className="rounded-full size-32 object-cover"
                     />

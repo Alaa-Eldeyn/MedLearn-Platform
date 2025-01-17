@@ -21,7 +21,7 @@ import { FreeTest, PremiumTest } from "./components/Exams";
 
 function App() {
   const location = useLocation();
-
+  //preline config
   useEffect(() => {
     window.HSStaticMethods.autoInit();
   }, [location.pathname]);

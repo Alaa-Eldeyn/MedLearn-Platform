@@ -97,7 +97,7 @@ const Book = () => {
             {books?.map((book) => (
               <div key={book.id} className="bg-white rounded-xl shadow-md p-4">
                 <img
-                  src={`http://naserehab-001-site1.mtempurl.com${book?.thumbnailURL}`}
+                  src={`${import.meta.env.VITE_BASE_URL}${book?.thumbnailURL}`}
                   alt=""
                   className="h-96 w-full bg-gray-200 rounded-lg"
                 />

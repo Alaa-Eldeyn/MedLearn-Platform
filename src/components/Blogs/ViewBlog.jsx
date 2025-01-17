@@ -39,7 +39,7 @@ const ViewBlog = () => {
         </h1>
         <div className="relative w-full h-96 bg-gray-200 rounded-3xl overflow-hidden">
           <img
-            src={`http://naserehab-001-site1.mtempurl.com${blog?.imageURL}`}
+            src={`${import.meta.env.VITE_BASE_URL}${blog?.imageURL}`}
             alt=""
             className="w-full object-cover"
             loading="lazy"

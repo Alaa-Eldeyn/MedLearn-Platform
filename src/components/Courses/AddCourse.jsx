@@ -20,13 +20,16 @@ const AddCourse = ({ setAddCourseModal }) => {
   const addToRequirements = (e) => {
     e.preventDefault();
     if (!currentReq.current.value) return;
-    setRequirements([...requirements, currentReq.current.value]);
+    setRequirements([
+      ...requirements,
+      { "description": currentReq.current.value },
+    ]);
     currentReq.current.value = "";
   };
   const addToObjectives = (e) => {
     e.preventDefault();
     if (!currentObj.current.value) return;
-    setObjectives([...objectives, currentObj.current.value]);
+    setObjectives([...objectives, { "description": currentObj.current.value }]);
     currentObj.current.value = "";
   };
   const {
@@ -275,7 +278,7 @@ const AddCourse = ({ setAddCourseModal }) => {
                           key={i}
                           className="flex justify-between rounded-lg border font-bold border-primary py-2 px-4 text-primary"
                         >
-                          <span>{req}</span>
+                          <span>{req.description}</span>
                           <button
                             onClick={(e) => {
                               e.preventDefault();
@@ -319,7 +322,7 @@ const AddCourse = ({ setAddCourseModal }) => {
                           key={i}
                           className="flex justify-between rounded-lg border font-bold border-primary py-2 px-4 text-primary"
                         >
-                          <span>{obj}</span>
+                          <span>{obj.description}</span>
                           <button
                             onClick={(e) => {
                               e.preventDefault();

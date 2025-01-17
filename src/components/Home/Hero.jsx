@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import hero from "../../assets/hero.png";
+
 const Hero = () => {
   return (
     <section className="w-full bg-[#1E0C2F] bg-[radial-gradient(circle_at_3%,#AC59FF4D_0,transparent_20%),radial-gradient(circle_at_96%,#AC59FF4D_0,transparent_20%),radial-gradient(circle_at_center_bottom,#AC59FF4D_0,transparent_25%)]">
