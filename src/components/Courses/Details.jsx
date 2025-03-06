@@ -46,9 +46,7 @@ const Details = () => {
     let user = getUser();
     let data = {
       userId: user?.id,
-      subscriberEmail: paypalEmail,
-      subscriberFirstName: user?.firstName,
-      subscriberLastName: user?.lastName,
+      courseId: course?.id,
     };
     let res = await requestPaypalEnroll(data);
     if (res?.isSuccess) {

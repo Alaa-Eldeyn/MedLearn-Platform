@@ -419,7 +419,7 @@ const requestLocalSubscription = async (data) => {
 
 const requestPaypalEnroll = async (data) => {
   try {
-    let response = await customAxios.post("/PayPal/CreateSubscribtion", data);
+    let response = await customAxios.post("/PayPal/BuyCourse", data);
     return response?.data;
   } catch (error) {
     console.error(error);
