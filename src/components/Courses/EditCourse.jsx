@@ -75,6 +75,8 @@ const EditCourse = () => {
       Objectives: objectives,
     };
     let res = await editCourse(data);
+    console.log(res);
+
     if (res?.isSuccess) {
       setEditInfo(false);
     }
@@ -114,7 +116,6 @@ const EditCourse = () => {
     if (res?.isSuccess) {
       let resp = await getOneCourse(params?.id);
       setCourse(resp?.data);
-      console.log("resp", resp);
     }
   };
   const fetchQuestions = async () => {
@@ -171,8 +172,6 @@ const EditCourse = () => {
   useEffect(() => {
     const fetchCourse = async () => {
       let res = await getOneCourse(params?.id);
-      console.log(res);
-
       if (res?.isSuccess) {
         setCourse(res?.data);
         setValue("title", res?.data?.title);
@@ -481,7 +480,7 @@ const EditCourse = () => {
                 onClick={handleSubmit(handleEditCourse)}
                 disabled={isSubmitting}
               >
-                Save Edits
+                {isSubmitting ? "Loading..." : "Save Changes"}
               </button>
             ) : (
               <button

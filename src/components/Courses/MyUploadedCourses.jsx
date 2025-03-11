@@ -16,7 +16,6 @@ const MyUploadedCourses = () => {
       let res = await getUploadedCourses(id);
       if (res?.isSuccess) {
         setCourses(res?.data);
-        console.log(res?.data);
       }
     };
     fetchCourses();
@@ -86,9 +85,6 @@ const MyUploadedCourses = () => {
                       })}
                     </p>
                     <span className="text-xs">{item?.instructorFullName}</span>
-                    <button className="center text-white bg-primary p-3 w-full rounded-full mt-3">
-                      Enroll Now
-                    </button>
                     <div className="center !gap-2 mt-5">
                       <Link
                         to={`/academy/update-course/${item?.id}`}

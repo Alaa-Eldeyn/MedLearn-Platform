@@ -16,7 +16,6 @@ const Book = () => {
     const fetchBooks = async () => {
       let res = await getAllBooks();
       setBooks(res?.data);
-      console.log(res?.data);
     };
     const getCategoriesAndSubs = async () => {
       let cat = await getAllCategories("Books");
@@ -32,7 +31,6 @@ const Book = () => {
     // setBooks(res?.data);
     console.log(filters);
   };
-  console.log(books);
 
   return (
     <>

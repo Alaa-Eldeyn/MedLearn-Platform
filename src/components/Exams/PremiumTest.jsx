@@ -122,7 +122,7 @@ const PremiumTest = () => {
           <div className="flex gap-x-12 py-20 container">
             <div className="rounded-xl bg-white p-5 border-2 border-[#EC8AB3] h-96 md:w-[460px] ">
               <h2 className="font-bold">
-                Questions {`(${questions?.length})`}
+                Questions {`(${questions?.length || 0})`}
               </h2>
               {/* Filter Buttons */}
               {/* <div className="space-x-2 pb-5 pt-2 text-xs">
@@ -154,9 +154,9 @@ const PremiumTest = () => {
 
               {/* Question List with Indicator Circles */}
               <div className="space-y-2 overflow-auto h-72 mt-5 pr-2 pink-sc">
-                {questions.map((question, i) => (
+                {questions?.map((question, i) => (
                   <div
-                    key={question.id}
+                    key={question?.id}
                     onClick={() => setCurrentQuestionIndex(i)}
                     className={`flex items-center gap-2 rounded-lg border-2 border-transparent bg-gray-50 py-3 px-2 cursor-pointer hover:bg-[#FFF4F9]
                 ${
@@ -167,70 +167,76 @@ const PremiumTest = () => {
                     <Icon
                       icon="icon-park-outline:dot"
                       className={`text-2xl !size-4 ${
-                        question.userAnswer ? "!text-[#EC8AB3]" : " !text-black"
+                        question?.userAnswer
+                          ? "!text-[#EC8AB3]"
+                          : " !text-black"
                       }`}
                     />
                     <p className="line-clamp-1 flex-1">
-                      {`${question.id}. `} {question.description}
+                      {`${question?.id}. `} {question?.description}
                     </p>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="flex-1">
-              {/* Current Question and Answer Options */}
-              <div>
-                <h3 className="font-bold text-xl mb-3">
-                  {`${questions[currentQuestionIndex]?.id}. `}
-                  {questions[currentQuestionIndex]?.description}
-                </h3>
-                {questions[currentQuestionIndex]?.answers.map((answer) => (
-                  <label
-                    key={answer.id}
-                    className="flex gap-3 py-2 cursor-pointer"
-                  >
-                    <input
-                      type="radio"
-                      name={`question-${questions[currentQuestionIndex].id}`}
-                      value={answer.id}
-                      checked={
-                        questions[currentQuestionIndex].userAnswer === answer.id
-                      }
-                      onChange={() => handleAnswer(answer.id)}
-                    />
-                    <span className="py-1">{answer.description}</span>
-                  </label>
-                ))}
-              </div>
-              {/* Navigation Buttons */}
-              <div className="space-x-3 mt-5">
-                {currentQuestionIndex === questions.length - 1 ? (
+
+            {questions?.length > 0 && (
+              <div className="flex-1">
+                {/* Current Question and Answer Options */}
+                <div>
+                  <h3 className="font-bold text-xl mb-3">
+                    {`${questions[currentQuestionIndex]?.id}. `}
+                    {questions[currentQuestionIndex]?.description}
+                  </h3>
+                  {questions[currentQuestionIndex]?.answers?.map((answer) => (
+                    <label
+                      key={answer?.id}
+                      className="flex gap-3 py-2 cursor-pointer"
+                    >
+                      <input
+                        type="radio"
+                        name={`question-${questions[currentQuestionIndex]?.id}`}
+                        value={answer.id}
+                        checked={
+                          questions[currentQuestionIndex]?.userAnswer ===
+                          answer?.id
+                        }
+                        onChange={() => handleAnswer(answer?.id)}
+                      />
+                      <span className="py-1">{answer?.description}</span>
+                    </label>
+                  ))}
+                </div>
+                {/* Navigation Buttons */}
+                <div className="space-x-3 mt-5">
+                  {currentQuestionIndex === questions?.length - 1 ? (
+                    <button
+                      className="px-5 py-2 rounded-lg soft bg-[#984D9F] text-white"
+                      onClick={() => {
+                        calculateResult();
+                      }}
+                    >
+                      Submit
+                    </button>
+                  ) : (
+                    <button
+                      disabled={currentQuestionIndex === questions?.length - 1}
+                      className="px-5 py-2 rounded-lg soft bg-[#984D9F] text-white"
+                      onClick={nextQuestion}
+                    >
+                      Next Question
+                    </button>
+                  )}
                   <button
-                    className="px-5 py-2 rounded-lg soft bg-[#984D9F] text-white"
-                    onClick={() => {
-                      calculateResult();
-                    }}
+                    disabled={currentQuestionIndex === 0}
+                    className="px-5 py-2 rounded-lg soft text-[#984D9F] border border-[#984D9F]"
+                    onClick={prevQuestion}
                   >
-                    Submit
+                    Prev Question
                   </button>
-                ) : (
-                  <button
-                    disabled={currentQuestionIndex === questions.length - 1}
-                    className="px-5 py-2 rounded-lg soft bg-[#984D9F] text-white"
-                    onClick={nextQuestion}
-                  >
-                    Next Question
-                  </button>
-                )}
-                <button
-                  disabled={currentQuestionIndex === 0}
-                  className="px-5 py-2 rounded-lg soft text-[#984D9F] border border-[#984D9F]"
-                  onClick={prevQuestion}
-                >
-                  Prev Question
-                </button>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </>
       )}

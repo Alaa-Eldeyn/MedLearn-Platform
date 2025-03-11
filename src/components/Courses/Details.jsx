@@ -48,6 +48,8 @@ const Details = () => {
       userId: user?.id,
       courseId: course?.id,
     };
+    console.log(data);
+    
     let res = await requestPaypalEnroll(data);
     if (res?.isSuccess) {
       const approveLink = res.data.links.find((link) => link.rel === "approve");

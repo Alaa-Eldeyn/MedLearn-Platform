@@ -121,7 +121,7 @@ const rejectCourse = async (courseId) => {
 
 const editCourse = async (data) => {
   try {
-    let response = await customAxios.put("/Course/AddCourse", data, {
+    let response = await customAxios.put("/Course/EditCourse", data, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

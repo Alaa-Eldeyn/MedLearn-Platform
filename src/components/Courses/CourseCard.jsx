@@ -29,18 +29,16 @@ const CourseCard = ({ course }) => {
         <p className="text-gray-500 my-2 text-sm h-14">
           {course?.objectives?.map((obj) => {
             return `${obj.description}${
-              course?.objectives?.indexOf(obj) === course?.objectives?.length - 1
+              course?.objectives?.indexOf(obj) ===
+              course?.objectives?.length - 1
                 ? "."
                 : ","
             }`;
           })}
         </p>
         <span className="text-xs">{course?.instructorFullName}</span>
-        <button className="center text-white bg-primary p-3 w-full rounded-full mt-3">
-          Enroll Now
-        </button>
         <Link
-          to={`/academy/courses/${course?.id}`}
+          to={`/academy/courses/${course?.title}/${course?.id}`}
           className="block text-center text-[#E2508D] border border-[#E2508D] p-3 w-full rounded-full mt-2"
         >
           See More

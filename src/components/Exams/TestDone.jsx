@@ -109,9 +109,12 @@ const TestDone = ({
               practice, refine your knowledge, and come back stronger than ever.
             </p>
             <div className="flex gap-3">
-              <button className="px-5 py-2 rounded-lg soft bg-[#984D9F] text-white">
+              <Link
+                to={isFree ? "/academy/free-exams" : "/academy/premium-exams"}
+                className="px-5 py-2 rounded-lg soft bg-[#984D9F] text-white"
+              >
                 Got it
-              </button>
+              </Link>
               <button
                 onClick={() => resetTest()}
                 className="px-5 py-2 rounded-lg soft bg-[#FAEBF1]"

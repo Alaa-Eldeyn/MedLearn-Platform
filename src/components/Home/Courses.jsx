@@ -3,6 +3,8 @@ import MainTitle from "./MainTitle";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 const Courses = ({ courses }) => {
+  console.log(courses);
+
   return (
     <>
       <div className="w-10/12 sm:w-full mx-auto pb-32">
@@ -20,8 +22,7 @@ const Courses = ({ courses }) => {
                 <div className="relative w-full">
                   <img
                     className="w-full rounded-2xl"
-                    src="https://instructor-academy.onlinecoursehost.com/content/images/2023/05/101_-What-Online-Courses-Are-Most-In-Demand-In-2023_.jpg"
-                    // src={item?.thumbnailURL}
+                    src={import.meta.env.VITE_BASE_URL + item?.thumbnailURL}
                     alt="Course image preview"
                   />
                   <div className="center !gap-2 lg:gap-3 w-[90%] mx-auto rounded-full p-3 border-[5px] border-white -translate-y-8  bg-[#CC775D] text-white text-xs soft -mb-8">
@@ -43,11 +44,9 @@ const Courses = ({ courses }) => {
                     <h3 className="font-bold text-[#E2508D]">{item?.price}$</h3>
                   </div>
                   <p className="text-gray-500 my-2 text-sm h-14">
-                    {/* {item?.objectives?.map((obj, i) => (
-                      <span key={i} className="block">
-                        {obj},
-                      </span>
-                    ))} */}
+                    {item?.objectives?.map((obj) => (
+                      <span key={obj.id}>{obj.description}, </span>
+                    ))}
                   </p>
                   <span className="text-xs">
                     By: {item?.instructorFullName}
@@ -56,7 +55,7 @@ const Courses = ({ courses }) => {
                     Enroll Now
                   </button> */}
                   <Link
-                    to={`/academy/courses/${item?.categoryName}/${item?.id}`}
+                    to={`/academy/courses/${item?.title}/${item?.id}`}
                     className="block text-center text-[#E2508D] hover:text-white hover:bg-[#E2508D] soft border border-[#E2508D] p-3 w-full rounded-full mt-2"
                   >
                     See More
