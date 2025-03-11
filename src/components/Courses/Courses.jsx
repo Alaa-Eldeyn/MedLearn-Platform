@@ -70,9 +70,7 @@ const Courses = () => {
     let user = getUser();
     let data = {
       userId: user?.id,
-      subscriberEmail: paypalEmail,
-      subscriberFirstName: user?.firstName,
-      subscriberLastName: user?.lastName,
+      courseId: selectedCourse?.id,
     };
     let res = await requestPaypalEnroll(data);
     if (res?.isSuccess) {

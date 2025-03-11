@@ -6,8 +6,8 @@ import TestDone from "./TestDone";
 import EnrollModal from "../Courses/EnrollModal";
 import { getUser } from "../../utils/LocalStorage";
 import {
+  requestLocalPaypalSubscription,
   requestLocalSubscription,
-  requestPaypalEnroll,
 } from "../../utils/courses";
 import { useParams } from "react-router-dom";
 import { getTestQuestions } from "../../utils/Exams";
@@ -25,7 +25,7 @@ const FreeTest = () => {
   // const [filter, setFilter] = useState("all");
   const nextQuestion = () => {
     setCurrentQuestionIndex((prevIndex) =>
-      Math.min(prevIndex + 1, questions.length - 1)
+      Math.min(prevIndex + 1, questions?.length - 1)
     );
   };
 
@@ -35,7 +35,7 @@ const FreeTest = () => {
 
   const handleAnswer = (answerId) => {
     setQuestions((prevQuestions) =>
-      prevQuestions.map((question, index) => {
+      prevQuestions?.map((question, index) => {
         if (index === currentQuestionIndex) {
           return { ...question, userAnswer: answerId };
         }
@@ -69,7 +69,7 @@ const FreeTest = () => {
       subscriberFirstName: user?.firstName,
       subscriberLastName: user?.lastName,
     };
-    let res = await requestPaypalEnroll(data);
+    let res = await requestLocalPaypalSubscription(data);
     if (res?.isSuccess) {
       const approveLink = res.data.links.find((link) => link.rel === "approve");
       if (approveLink && approveLink.href) {
@@ -81,18 +81,18 @@ const FreeTest = () => {
       toast.error(res.message);
     }
   };
-  // const filteredQuestions = questions.filter((q) => {
+  // const filteredQuestions = questions?.filter((q) => {
   //   if (filter === "answered") return q.userAnswer !== undefined;
   //   if (filter === "unanswered") return q.userAnswer === undefined;
   //   return true;
   // });
 
   const calculateResult = async () => {
-    const unansweredQuestions = questions.filter(
-      (question) => question.userAnswer === undefined
+    const unansweredQuestions = questions?.filter(
+      (question) => question?.userAnswer === undefined
     );
 
-    if (unansweredQuestions.length > 0) {
+    if (unansweredQuestions?.length > 0) {
       toast.error("Please answer all questions before submitting.");
       return;
     }
@@ -110,16 +110,16 @@ const FreeTest = () => {
     if (result.isConfirmed) {
       let correctCount = 0;
 
-      questions.forEach((question) => {
-        const selectedAnswer = question.answers.find(
-          (answer) => answer.id === question.userAnswer
+      questions?.forEach((question) => {
+        const selectedAnswer = question?.answers.find(
+          (answer) => answer.id === question?.userAnswer
         );
 
         if (selectedAnswer && selectedAnswer.isCorrect) {
           correctCount += 1;
         }
       });
-      const scorePercentage = (correctCount / questions.length) * 100;
+      const scorePercentage = (correctCount / questions?.length) * 100;
 
       setCorrectAnswersCount(correctCount);
       setScorePercentage(scorePercentage);
@@ -138,7 +138,7 @@ const FreeTest = () => {
     setCorrectAnswersCount(0);
     setScorePercentage(0);
     setQuestions(
-      questions.map((question) => {
+      questions?.map((question) => {
         return { ...question, userAnswer: undefined };
       })
     );
@@ -199,7 +199,7 @@ const FreeTest = () => {
             <div className="flex gap-x-12">
               <div className="rounded-xl bg-white p-5 border-2 border-[#EC8AB3] h-96 md:w-[460px] ">
                 <h2 className="font-bold">
-                  Questions {`(${questions?.length})`}
+                  Questions {`(${questions?.length || 0})`}
                 </h2>
                 {/* Filter Buttons */}
                 {/* <div className="space-x-2 pb-5 pt-2 text-xs">
@@ -231,9 +231,9 @@ const FreeTest = () => {
 
                 {/* Question List with Indicator Circles */}
                 <div className="space-y-2 overflow-auto h-72 mt-5 pr-2 pink-sc">
-                  {questions.map((question, i) => (
+                  {questions?.map((question, i) => (
                     <div
-                      key={question.id}
+                      key={question?.id}
                       onClick={() => setCurrentQuestionIndex(i)}
                       className={`flex items-center gap-2 rounded-lg border-2 border-transparent bg-gray-50 py-3 px-2 cursor-pointer hover:bg-[#FFF4F9]
                 ${
@@ -244,73 +244,77 @@ const FreeTest = () => {
                       <Icon
                         icon="icon-park-outline:dot"
                         className={`text-2xl !size-4 ${
-                          question.userAnswer
+                          question?.userAnswer
                             ? "!text-[#EC8AB3]"
                             : " !text-black"
                         }`}
                       />
                       <p className="line-clamp-1 flex-1">
-                        {`${question.id}. `} {question.description}
+                        {`${question?.id}. `} {question?.description}
                       </p>
                     </div>
                   ))}
                 </div>
               </div>
-              <div className="flex-1">
-                {/* Current Question and Answer Options */}
-                <div>
-                  <h3 className="font-bold text-xl mb-3">
-                    {`${questions[currentQuestionIndex]?.id}. `}
-                    {questions[currentQuestionIndex]?.description}
-                  </h3>
-                  {questions[currentQuestionIndex]?.answers.map((answer) => (
-                    <label
-                      key={answer.id}
-                      className="flex gap-3 py-2 cursor-pointer"
-                    >
-                      <input
-                        type="radio"
-                        name={`question-${questions[currentQuestionIndex].id}`}
-                        value={answer.id}
-                        checked={
-                          questions[currentQuestionIndex].userAnswer ===
-                          answer.id
+              {questions?.length > 0 && (
+                <div className="flex-1">
+                  {/* Current Question and Answer Options */}
+                  <div>
+                    <h3 className="font-bold text-xl mb-3">
+                      {`${questions[currentQuestionIndex]?.id}. `}
+                      {questions[currentQuestionIndex]?.description}
+                    </h3>
+                    {questions[currentQuestionIndex]?.answers.map((answer) => (
+                      <label
+                        key={answer.id}
+                        className="flex gap-3 py-2 cursor-pointer"
+                      >
+                        <input
+                          type="radio"
+                          name={`question-${questions[currentQuestionIndex]?.id}`}
+                          value={answer.id}
+                          checked={
+                            questions[currentQuestionIndex]?.userAnswer ===
+                            answer.id
+                          }
+                          onChange={() => handleAnswer(answer.id)}
+                        />
+                        <span className="py-1">{answer.description}</span>
+                      </label>
+                    ))}
+                  </div>
+                  {/* Navigation Buttons */}
+                  <div className="space-x-3 mt-5">
+                    {currentQuestionIndex === questions?.length - 1 ? (
+                      <button
+                        className="px-5 py-2 rounded-lg soft bg-[#984D9F] text-white"
+                        onClick={() => {
+                          calculateResult();
+                        }}
+                      >
+                        Submit
+                      </button>
+                    ) : (
+                      <button
+                        disabled={
+                          currentQuestionIndex === questions?.length - 1
                         }
-                        onChange={() => handleAnswer(answer.id)}
-                      />
-                      <span className="py-1">{answer.description}</span>
-                    </label>
-                  ))}
-                </div>
-                {/* Navigation Buttons */}
-                <div className="space-x-3 mt-5">
-                  {currentQuestionIndex === questions.length - 1 ? (
+                        className="px-5 py-2 rounded-lg soft bg-[#984D9F] text-white"
+                        onClick={nextQuestion}
+                      >
+                        Next Question
+                      </button>
+                    )}
                     <button
-                      className="px-5 py-2 rounded-lg soft bg-[#984D9F] text-white"
-                      onClick={() => {
-                        calculateResult();
-                      }}
+                      disabled={currentQuestionIndex === 0}
+                      className="px-5 py-2 rounded-lg soft text-[#984D9F] border border-[#984D9F]"
+                      onClick={prevQuestion}
                     >
-                      Submit
+                      Prev Question
                     </button>
-                  ) : (
-                    <button
-                      disabled={currentQuestionIndex === questions.length - 1}
-                      className="px-5 py-2 rounded-lg soft bg-[#984D9F] text-white"
-                      onClick={nextQuestion}
-                    >
-                      Next Question
-                    </button>
-                  )}
-                  <button
-                    disabled={currentQuestionIndex === 0}
-                    className="px-5 py-2 rounded-lg soft text-[#984D9F] border border-[#984D9F]"
-                    onClick={prevQuestion}
-                  >
-                    Prev Question
-                  </button>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </>

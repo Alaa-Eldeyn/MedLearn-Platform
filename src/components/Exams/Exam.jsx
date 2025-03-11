@@ -128,7 +128,7 @@ const Exam = ({ isFree }) => {
                 <option value="" className="bg-white p-2 shadow-lg rounded-xl">
                   All Categories
                 </option>
-                {categories.map((category) => (
+                {categories?.map((category) => (
                   <option
                     key={category.id}
                     value={category.id}
@@ -149,7 +149,7 @@ const Exam = ({ isFree }) => {
                 <option value="" className="bg-white p-2 shadow-lg rounded-xl">
                   All Sub categories
                 </option>
-                {subCategories.map((subCategory) => (
+                {subCategories?.map((subCategory) => (
                   <option
                     key={subCategory.id}
                     value={subCategory.id}
