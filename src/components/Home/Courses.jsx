@@ -3,8 +3,6 @@ import MainTitle from "./MainTitle";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 const Courses = ({ courses }) => {
-  console.log(courses);
-
   return (
     <>
       <div className="w-10/12 sm:w-full mx-auto pb-32">

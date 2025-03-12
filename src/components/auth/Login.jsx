@@ -73,7 +73,7 @@ const Login = () => {
                 </p>
               )}
             </div>
-            <Link to={"/Forget-pass"} className=" block mt-5 font-bold">
+            <Link to={"/forget-password"} className=" block mt-5 font-bold">
               Forget Password?
             </Link>
             <div className="mt-6">

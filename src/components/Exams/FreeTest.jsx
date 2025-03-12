@@ -70,6 +70,10 @@ const FreeTest = () => {
       subscriberLastName: user?.lastName,
     };
     let res = await requestLocalPaypalSubscription(data);
+    console.log(data);
+    console.log(res);
+    
+    
     if (res?.isSuccess) {
       const approveLink = res.data.links.find((link) => link.rel === "approve");
       if (approveLink && approveLink.href) {
