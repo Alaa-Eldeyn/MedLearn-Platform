@@ -5,7 +5,10 @@ import { getAllFreeExams, getAllPremiumExams } from "../../utils/Exams";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { getUser } from "../../utils/LocalStorage";
-import { requestLocalSubscription, requestPaypalEnroll } from "../../utils/courses";
+import {
+  requestLocalPaypalSubscription,
+  requestLocalSubscription,
+} from "../../utils/courses";
 import EnrollModal from "../Courses/EnrollModal";
 import { useNavigate } from "react-router-dom";
 
@@ -78,7 +81,6 @@ const Exam = ({ isFree }) => {
     }
   };
   const handlePaypalPayment = async () => {
-
     let user = getUser();
     let data = {
       userId: user?.id,
@@ -86,7 +88,7 @@ const Exam = ({ isFree }) => {
       subscriberFirstName: user?.firstName,
       subscriberLastName: user?.lastName,
     };
-    let res = await requestPaypalEnroll(data);
+    let res = await requestLocalPaypalSubscription(data);
     if (res?.isSuccess) {
       const approveLink = res.data.links.find((link) => link.rel === "approve");
       if (approveLink && approveLink.href) {
