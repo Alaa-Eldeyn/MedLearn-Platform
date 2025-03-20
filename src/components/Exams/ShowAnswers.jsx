@@ -10,7 +10,6 @@ function ShowAnswers({
   prevQuestion,
   isFree,
 }) {
-  console.log(questions);
   useEffect(() => {
     if (questions.length > 0) {
       setCurrentQuestionIndex(0);
