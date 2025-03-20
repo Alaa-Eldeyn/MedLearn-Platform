@@ -1,5 +1,4 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Link } from "react-router-dom";
 
 const TestDone = ({
   scorePercentage,
@@ -9,6 +8,7 @@ const TestDone = ({
   setSubscriptionModal,
   setTestDone,
   isFree,
+  setShowAnswers,
 }) => {
   return (
     <>
@@ -47,12 +47,15 @@ const TestDone = ({
               momentum and take your learning to the next level!
             </p>
             <div className="flex gap-3">
-              <Link
-                to={isFree ? "/academy/free-exams" : "/academy/premium-exams"}
+              <button
+                onClick={() => {
+                  setShowAnswers(true);
+                  setTestDone(false);
+                }}
                 className="px-5 py-2 rounded-lg soft bg-[#984D9F] text-white"
               >
-                Got it
-              </Link>
+                View Correct Answers
+              </button>
               <button
                 onClick={() => resetTest()}
                 className="px-5 py-2 rounded-lg soft bg-[#FAEBF1]"
@@ -63,8 +66,8 @@ const TestDone = ({
             {isFree && (
               <button
                 onClick={() => {
-                  setTestDone(false);
                   setSubscriptionModal(true);
+                  setTestDone(false);
                 }}
                 className="group text-[#E2508D] center !gap-2 font-bold"
               >
@@ -109,12 +112,15 @@ const TestDone = ({
               practice, refine your knowledge, and come back stronger than ever.
             </p>
             <div className="flex gap-3">
-              <Link
-                to={isFree ? "/academy/free-exams" : "/academy/premium-exams"}
+              <button
+                onClick={() => {
+                  setShowAnswers(true);
+                  setTestDone(false);
+                }}
                 className="px-5 py-2 rounded-lg soft bg-[#984D9F] text-white"
               >
-                Got it
-              </Link>
+                View Correct Answers
+              </button>
               <button
                 onClick={() => resetTest()}
                 className="px-5 py-2 rounded-lg soft bg-[#FAEBF1]"
@@ -125,8 +131,8 @@ const TestDone = ({
             {isFree && (
               <button
                 onClick={() => {
-                  setTestDone(false);
                   setSubscriptionModal(true);
+                  setTestDone(false);
                 }}
                 className="group text-[#E2508D] center !gap-2 font-bold"
               >

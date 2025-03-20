@@ -11,6 +11,7 @@ import {
 } from "../../utils/courses";
 import { useParams } from "react-router-dom";
 import { getTestQuestions } from "../../utils/Exams";
+import ShowAnswers from "./ShowAnswers";
 
 const FreeTest = () => {
   const [questions, setQuestions] = useState([]);
@@ -22,6 +23,7 @@ const FreeTest = () => {
   const [receipt, setReceipt] = useState(null);
   const [paypalEmail, setPaypalEmail] = useState("");
   const params = useParams();
+  const [showAnswers, setShowAnswers] = useState(false);
   // const [filter, setFilter] = useState("all");
   const nextQuestion = () => {
     setCurrentQuestionIndex((prevIndex) =>
@@ -72,8 +74,7 @@ const FreeTest = () => {
     let res = await requestLocalPaypalSubscription(data);
     console.log(data);
     console.log(res);
-    
-    
+
     if (res?.isSuccess) {
       const approveLink = res.data.links.find((link) => link.rel === "approve");
       if (approveLink && approveLink.href) {
@@ -179,7 +180,17 @@ const FreeTest = () => {
             setSubscriptionModal,
             isFree: true,
             setTestDone,
+            setShowAnswers,
           }}
+        />
+      ) : showAnswers ? (
+        <ShowAnswers
+          questions={questions}
+          currentQuestionIndex={currentQuestionIndex}
+          setCurrentQuestionIndex={setCurrentQuestionIndex}
+          nextQuestion={nextQuestion}
+          prevQuestion={prevQuestion}
+          isFree={true}
         />
       ) : (
         <>

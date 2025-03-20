@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import TestDone from "./TestDone";
 import { useParams } from "react-router-dom";
 import { getTestQuestions } from "../../utils/Exams";
+import ShowAnswers from "./ShowAnswers";
 
 const PremiumTest = () => {
   const [questions, setQuestions] = useState([]);
@@ -13,6 +14,7 @@ const PremiumTest = () => {
   const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
   const [scorePercentage, setScorePercentage] = useState(0);
   const params = useParams();
+  const [showAnswers, setShowAnswers] = useState(false);
   // const [filter, setFilter] = useState("all");
   const nextQuestion = () => {
     setCurrentQuestionIndex((prevIndex) =>
@@ -115,7 +117,18 @@ const PremiumTest = () => {
             questions,
             resetTest,
             isFree: false,
+            setShowAnswers,
+            setTestDone,
           }}
+        />
+      ) : showAnswers ? (
+        <ShowAnswers
+          questions={questions}
+          currentQuestionIndex={currentQuestionIndex}
+          setCurrentQuestionIndex={setCurrentQuestionIndex}
+          nextQuestion={nextQuestion}
+          prevQuestion={prevQuestion}
+          isFree={false}
         />
       ) : (
         <>
