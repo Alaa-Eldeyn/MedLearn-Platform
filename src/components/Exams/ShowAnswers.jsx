@@ -1,6 +1,46 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { useEffect } from "react";
+import { useEffect, memo } from "react";
 import { Link } from "react-router-dom";
+
+
+const NavigationButton = memo(({ onClick, disabled, children, primary }) => (
+  <button
+    onClick={onClick}
+    disabled={disabled}
+    className={`px-5 py-2 rounded-lg soft ${
+      primary
+        ? "bg-[#984D9F] text-white hover:bg-[#7D3B7F]"
+        : "text-[#984D9F] border border-[#984D9F]"
+    } disabled:cursor-not-allowed disabled:opacity-50`}
+  >
+    {children}
+  </button>
+));
+NavigationButton.displayName = "NavigationButton";
+
+const AnswerOption = memo(({ answer, isSelected, name, isAnswer }) => (
+  <label
+    className={`flex gap-3 py-2 pointer-events-none ${
+      answer?.isCorrect
+        ? isAnswer
+          ? "text-primary accent-primary"
+          : "text-green-600 accent-green-600"
+        : isAnswer
+        ? "text-black"
+        : "text-red-600 accent-red-600"
+    }`}
+  >
+    <input
+      type="radio"
+      name={name}
+      value={answer.id}
+      checked={isSelected}
+      className=" "
+    />
+    <p className="py-1">{answer?.description}</p>
+  </label>
+));
+AnswerOption.displayName = "AnswerOption";
 
 function ShowAnswers({
   questions,
@@ -14,28 +54,28 @@ function ShowAnswers({
     if (questions.length > 0) {
       setCurrentQuestionIndex(0);
     }
-  }, []);
+  }, [questions]);
+
   return (
     <div className="flex gap-x-12 py-20 container">
-      <div className="rounded-xl bg-white p-5 border-2 border-[#EC8AB3] h-96 md:w-[460px] ">
-        <h2 className="font-bold">Questions {`(${questions?.length || 0})`}</h2>
+      <div className="rounded-xl bg-white p-5 border-2 border-[#EC8AB3] h-96 md:w-[460px]">
+        <h2 className="font-bold">Questions ({questions?.length || 0})</h2>
 
         <div className="space-y-2 overflow-auto h-72 mt-5 pr-2 pink-sc">
           {questions?.map((question, i) => (
             <div
               key={question?.id}
-              onClick={() => setCurrentQuestionIndex(i)}
-              className={`flex items-center gap-2 rounded-lg border-2 border-transparent bg-gray-50 py-3 px-2 cursor-pointer hover:bg-[#FFF4F9]
-                  ${
-                    currentQuestionIndex === i &&
-                    "bg-[#FFF4F9] !border-[#EC8AB3]"
-                  }
-                  `}
+              onClick={() =>
+                currentQuestionIndex !== i && setCurrentQuestionIndex(i)
+              }
+              className={`flex items-center gap-2 rounded-lg border-2 border-transparent bg-gray-50 py-3 px-2 cursor-pointer hover:bg-[#FFF4F9] ${
+                currentQuestionIndex === i && "bg-[#FFF4F9] !border-[#EC8AB3]"
+              }`}
             >
               <Icon
                 icon="icon-park-outline:dot"
                 className={`text-2xl !size-4 ${
-                  question?.userAnswer ? "!text-[#EC8AB3]" : " !text-black"
+                  question?.userAnswer ? "!text-[#EC8AB3]" : "!text-black"
                 }`}
               />
               <p className="line-clamp-1 flex-1">
@@ -48,76 +88,55 @@ function ShowAnswers({
 
       {questions?.length > 0 && (
         <div className="flex-1">
-          {/* Current Question and Answer Options */}
           <div>
             <h3 className="font-bold text-xl mb-3">
               {`${questions[currentQuestionIndex]?.id}. `}
               {questions[currentQuestionIndex]?.description}
             </h3>
             {questions[currentQuestionIndex]?.answers?.map((answer) => (
-              <label
+              <AnswerOption
                 key={answer?.id}
-                className={`flex gap-3 py-2 ${
-                  answer?.isCorrect
-                    ? "text-green-500 accent-green-500"
-                    : "text-red-500 accent-red-500"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name={`question-${questions[currentQuestionIndex]?.id}`}
-                  value={answer.id}
-                  checked={
-                    questions[currentQuestionIndex]?.userAnswer === answer?.id
-                  }
-                />
-                <span className="py-1">{answer?.description}</span>
-              </label>
+                answer={answer}
+                isSelected={
+                  questions[currentQuestionIndex]?.userAnswer === answer?.id
+                }
+                name={`question-${questions[currentQuestionIndex]?.id}`}
+                isAnswer={false}
+              />
             ))}
           </div>
 
-          {/* Answers */}
           <div>
-            <h3 className="mt-3 font-bold">Answers: </h3>
+            <h3 className="mt-3 font-bold">Answers:</h3>
             {questions[currentQuestionIndex]?.answers?.map((answer) => (
               <div key={answer?.id}>
-                <label
-                  className={`flex gap-3 pt-2 font-bold ${
-                    answer?.isCorrect ? "text-primary accent-primary" : ""
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name={`questionAnswer-${questions[currentQuestionIndex]?.id}`}
-                    value={answer.id}
-                    checked={
-                      questions[currentQuestionIndex]?.userAnswer === answer?.id
-                    }
-                  />
-                  <span className="py-1">{answer?.description}</span>
-                </label>
+                <AnswerOption
+                  answer={answer}
+                  isSelected={
+                    questions[currentQuestionIndex]?.userAnswer === answer?.id
+                  }
+                  name={`questionAnswer-${questions[currentQuestionIndex]?.id}`}
+                  isAnswer={true}
+                />
                 <p className="pb-2">{answer?.reason}</p>
               </div>
             ))}
           </div>
 
-          {/* Navigation Buttons */}
           <div className="space-x-3 mt-5">
-            <button
-              disabled={currentQuestionIndex === questions?.length - 1}
-              className="px-5 py-2 rounded-lg soft bg-[#984D9F] text-white disabled:cursor-not-allowed disabled:opacity-50"
-              onClick={nextQuestion}
-            >
-              Next Question
-            </button>
-
-            <button
-              disabled={currentQuestionIndex === 0}
-              className="px-5 py-2 rounded-lg soft text-[#984D9F] border border-[#984D9F] disabled:cursor-not-allowed disabled:opacity-50"
+            <NavigationButton
               onClick={prevQuestion}
+              disabled={currentQuestionIndex === 0}
             >
               Prev Question
-            </button>
+            </NavigationButton>
+            <NavigationButton
+              onClick={nextQuestion}
+              disabled={currentQuestionIndex === questions?.length - 1}
+              primary
+            >
+              Next Question
+            </NavigationButton>
 
             {currentQuestionIndex === questions?.length - 1 && (
               <Link
@@ -133,4 +152,5 @@ function ShowAnswers({
     </div>
   );
 }
-export default ShowAnswers;
+
+export default memo(ShowAnswers);

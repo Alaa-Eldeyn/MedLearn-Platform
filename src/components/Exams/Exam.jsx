@@ -173,7 +173,11 @@ const Exam = ({ isFree }) => {
       )}
       <div className="w-10/12 sm:w-full mx-auto pb-10">
         <div className="container mx-auto my-6">
-          <div className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-5 -translate-y-24">
+          <div
+            className={`grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ${
+              !isFree && "-translate-y-24"
+            }`}
+          >
             {exams?.map((item) => (
               <div
                 key={item?.id}
