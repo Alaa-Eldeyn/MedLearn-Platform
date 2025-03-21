@@ -19,7 +19,7 @@ const Courses = ({ courses }) => {
               >
                 <div className="relative w-full">
                   <img
-                    className="w-full rounded-2xl"
+                    className="w-full rounded-2xl object-cover h-52"
                     src={import.meta.env.VITE_BASE_URL + item?.thumbnailURL}
                     alt="Course image preview"
                   />

@@ -5,7 +5,7 @@ const BlogCard = ({ blog }) => {
     <div className="rounded-3xl shadow-lg border p-3">
       <div className="relative">
         <img
-          className="rounded-3xl h-56 bg-gray-200 "
+          className="rounded-3xl h-56 bg-gray-200 object-cover w-full"
           src={`${import.meta.env.VITE_BASE_URL}${blog?.imageURL}`}
           alt={blog.title || "Blog Image"}
         />

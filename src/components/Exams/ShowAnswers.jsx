@@ -88,7 +88,7 @@ function ShowAnswers({
                 >
                   <input
                     type="radio"
-                    name={`question-${questions[currentQuestionIndex]?.id}`}
+                    name={`questionAnswer-${questions[currentQuestionIndex]?.id}`}
                     value={answer.id}
                     checked={
                       questions[currentQuestionIndex]?.userAnswer === answer?.id

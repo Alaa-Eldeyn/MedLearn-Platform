@@ -171,13 +171,13 @@ const Exam = ({ isFree }) => {
           </button>
         </div>
       )}
-      <div className="w-10/12 sm:w-full mx-auto pb-20">
+      <div className="w-10/12 sm:w-full mx-auto pb-10">
         <div className="container mx-auto my-6">
-          <div className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-5 -translate-y-24">
             {exams?.map((item) => (
               <div
                 key={item?.id}
-                className="rounded-3xl p-3 overflow-hidden shadow-md border"
+                className="rounded-3xl p-3 overflow-hidden shadow-md border bg-white"
               >
                 <div className="p-2">
                   <h2 className="line-clamp-1 font-bold text-xl mb-3">
