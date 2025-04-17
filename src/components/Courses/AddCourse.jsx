@@ -88,7 +88,7 @@ const AddCourse = ({ setAddCourseModal }) => {
         onClick={() => setAddCourseModal(false)}
       />
       <div className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <div className="bg-white px-10 py-6 rounded-3xl w-[60vw] h-[80vh]">
+        <div className="bg-white px-10 py-6 rounded-3xl w-[90vw] max-w-[800px] h-[80vh]">
           <div className="flex justify-between">
             <h2 className="text-primary font-bold text-3xl mb-5">
               Add Your New Course Now

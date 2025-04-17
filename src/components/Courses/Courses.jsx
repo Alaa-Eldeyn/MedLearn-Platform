@@ -47,11 +47,11 @@ const Courses = () => {
     setCourses(res?.data);
   };
   const handleLocalPayment = async () => {
-    let { id } = getUser();
+    let { email } = getUser();
     let data = {
       InstructorId: selectedCourse?.instructorId,
       CourseId: selectedCourse?.id,
-      StudentId: id,
+      StudentEmail: email,
       TransactionImage: receipt,
     };
     let res = await requestLocalEnroll(data);

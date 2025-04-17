@@ -384,7 +384,7 @@ const editCourseQuestion = async (questionId, data) => {
 const requestLocalEnroll = async (data) => {
   try {
     let response = await customAxios.post(
-      `Course/RequestEnroll?InstructorId=${data.InstructorId}&StudentId=${data.StudentId}&CourseId=${data.CourseId}`,
+      `Course/RequestEnroll?StudentEmail=${data.StudentEmail}&CourseId=${data.CourseId}`,
       { TransactionImage: data.TransactionImage },
       {
         headers: {

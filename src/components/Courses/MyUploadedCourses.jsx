@@ -3,13 +3,23 @@ import { getUser } from "../../utils/LocalStorage";
 import noResults from "../../assets/rafiki.svg";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { getUploadedCourses, requestDelete } from "../../utils/courses";
+import {
+  getUploadedCourses,
+  requestDelete,
+  requestLocalEnroll,
+} from "../../utils/courses";
 import AddCourse from "./AddCourse";
 import { toast } from "react-toastify";
+import AddUserModal from "./AddUserModal";
+import Swal from "sweetalert2";
 
 const MyUploadedCourses = () => {
   const [courses, setCourses] = useState([]);
   const [addCourseModal, setAddCourseModal] = useState(false);
+  const [addUserModal, setAddUserModal] = useState(false);
+  const [receipt, setReceipt] = useState(null);
+  const [studentEmail, setStudentEmail] = useState("");
+  const [courseId, setCourseId] = useState(null);
   let { id } = getUser();
   useEffect(() => {
     const fetchCourses = async () => {
@@ -26,8 +36,37 @@ const MyUploadedCourses = () => {
       toast.success("Request sent successfully");
     }
   };
+
+  const handleAddStudent = async () => {
+    let data = {
+      CourseId: courseId,
+      StudentEmail: studentEmail,
+      TransactionImage: receipt,
+    };
+    let res = await requestLocalEnroll(data);
+    if (res?.isSuccess) {
+      Swal.fire({
+        icon: "success",
+        title: "Enroll Request Sent",
+        text: res.message,
+        timer: 2000,
+      });
+    } else {
+      toast.error(res.message);
+    }
+  };
   return (
     <>
+      {addUserModal && (
+        <AddUserModal
+          setEnrollModal={setAddUserModal}
+          setReceipt={setReceipt}
+          studentEmail={studentEmail}
+          setStudentEmail={setStudentEmail}
+          handleRequest={handleAddStudent}
+          receipt={receipt}
+        />
+      )}
       {addCourseModal && <AddCourse setAddCourseModal={setAddCourseModal} />}
       {courses?.length === 0 ? (
         <div className="center -translate-y-20 flex-col">
@@ -41,7 +80,15 @@ const MyUploadedCourses = () => {
           </button>
         </div>
       ) : (
-        <div className="w-10/12 sm:w-full mx-auto py-20 -translate-y-48 -mb-48">
+        <div className="w-10/12 sm:w-full mx-auto py-20 -translate-y-52 -mb-52">
+          <button
+            type="button"
+            onClick={() => setAddCourseModal(true)}
+            className="mx-auto group !gap-2 center text-secondary transition-all font-bold text-lg px-5 py-2 border border-secondary rounded-full"
+          >
+            Upload new course
+            <Icon icon="ep:right" className="group-hover:translate-x-2 soft" />
+          </button>
           <div className="container mx-auto my-6">
             <div className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {courses?.map((item) => (
@@ -81,7 +128,12 @@ const MyUploadedCourses = () => {
                     </div>
                     <p className="text-gray-500 my-2 text-sm h-14">
                       {item?.objectives?.map((obj) => {
-                        return `${obj.description}${item?.objectives?.indexOf(obj) === item?.objectives?.length - 1 ? '.' : ','}`
+                        return `${obj.description}${
+                          item?.objectives?.indexOf(obj) ===
+                          item?.objectives?.length - 1
+                            ? "."
+                            : ","
+                        }`;
                       })}
                     </p>
                     <span className="text-xs">{item?.instructorFullName}</span>
@@ -101,6 +153,15 @@ const MyUploadedCourses = () => {
                         Delete
                       </button>
                     </div>
+                    <button
+                      onClick={() => {
+                        setCourseId(item?.id);
+                        setAddUserModal(true);
+                      }}
+                      className=" text-white border bg-primary p-3 w-full rounded-xl center gap-2 mt-2"
+                    >
+                      Add Student to this course
+                    </button>
                   </div>
                 </div>
               ))}
