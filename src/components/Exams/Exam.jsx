@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { getAllCategories, getAllSubCategories } from "../../utils/categories";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { getAllFreeExams, getAllPremiumExams } from "../../utils/Exams";
+import {
+  getAllFreeExams,
+  getAllPremiumExams,
+  getFilteredExams,
+} from "../../utils/Exams";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { getUser } from "../../utils/LocalStorage";
@@ -21,8 +25,8 @@ const Exam = ({ isFree }) => {
   const [receipt, setReceipt] = useState(null);
   const [paypalEmail, setPaypalEmail] = useState("");
   const [filters, setFilters] = useState({
-    category: "",
-    subCategory: "",
+    categoryId: "",
+    subCategoryId: "",
   });
   const [exams, setExams] = useState([]);
   useEffect(() => {
@@ -34,32 +38,41 @@ const Exam = ({ isFree }) => {
     };
     getCategoriesAndSubs();
   }, []);
-  useEffect(() => {
-    const fetchExams = async () => {
-      setExams([]);
-      if (isFree) {
-        let res = await getAllFreeExams();
-        if (res.isSuccess) {
-          setExams(res?.data);
-        } else {
-          console.log(res);
-        }
+  const fetchExams = async () => {
+    setExams([]);
+    if (isFree) {
+      let res = await getAllFreeExams();
+      if (res.isSuccess) {
+        setExams(res?.data);
       } else {
-        let res = await getAllPremiumExams();
-        if (res.isSuccess) {
-          setExams(res?.data);
-        } else {
-          setEnrollModal(true);
-          console.log(res);
-        }
+        console.log(res);
       }
-    };
+    } else {
+      let res = await getAllPremiumExams();
+      if (res.isSuccess) {
+        setExams(res?.data);
+      } else {
+        setEnrollModal(true);
+        console.log(res);
+      }
+    }
+  };
+  useEffect(() => {
     fetchExams();
   }, [isFree]);
   const handleSearch = async () => {
-    // let res = await getFilteredExams(filters);
-    // setExams(res?.data);
-    console.log(filters);
+    
+    let res = await getFilteredExams({ ...filters, isPremium: isFree });
+    if (res?.isSuccess) {
+      setExams(res?.data?.tests || []);
+    } else {
+      toast.error(res.message);
+      setFilters({
+        categoryId: "",
+        subCategoryId: "",
+      });
+      fetchExams();
+    }
   };
 
   const handleLocalPayment = async () => {
@@ -114,69 +127,71 @@ const Exam = ({ isFree }) => {
           receipt={receipt}
         />
       )}
-      {isFree && (
-        <div className="center mx-auto w-[90%] lg:w-fit flex-col lg:flex-row flex-wrap ">
-          <div className="rounded-xl bg-white -translate-y-8 min-h-16 flex-1 p-3 lg:px-10 shadow-md center flex-wrap ">
-            <div className="flex items-center">
-              <label htmlFor="categories">Category</label>
-              <select
-                id="categories"
-                className="bg-[#FDE7FF] text-black text-sm ml-2 font-normal rounded-full block py-2 px-3"
-                value={filters.category}
-                onChange={(e) => {
-                  setFilters({ ...filters, category: e.target.value });
-                }}
-              >
-                <option value="" className="bg-white p-2 shadow-lg rounded-xl">
-                  All Categories
+
+      <div className="center mx-auto w-[90%] lg:w-fit flex-col lg:flex-row flex-wrap ">
+        <div className="rounded-xl bg-white -translate-y-8 min-h-16 flex-1 p-3 lg:px-10 shadow-md center flex-wrap ">
+          <div className="flex items-center">
+            <label htmlFor="categories">Category</label>
+            <select
+              id="categories"
+              className="bg-[#FDE7FF] text-black text-sm ml-2 font-normal rounded-full block py-2 px-3"
+              value={filters.categoryId}
+              onChange={(e) => {
+                setFilters({ ...filters, categoryId: e.target.value });
+              }}
+            >
+              <option value="" className="bg-white p-2 shadow-lg rounded-xl">
+                All Categories
+              </option>
+              {categories?.map((category) => (
+                <option
+                  key={category.id}
+                  value={category.id}
+                  className="bg-white"
+                >
+                  {category.name}
                 </option>
-                {categories?.map((category) => (
-                  <option
-                    key={category.id}
-                    value={category.id}
-                    className="bg-white"
-                  >
-                    {category.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <hr className="h-[40px] w-[.1px] bg-gray-300 hidden lg:block" />
-            <div className="flex items-center">
-              <label htmlFor="subCategory">Sub Category</label>
-              <select
-                id="subCategory"
-                className="bg-[#FDE7FF]  text-black text-sm ml-2 font-normal rounded-full block py-2 px-3"
-              >
-                <option value="" className="bg-white p-2 shadow-lg rounded-xl">
-                  All Sub categories
-                </option>
-                {subCategories?.map((subCategory) => (
-                  <option
-                    key={subCategory.id}
-                    value={subCategory.id}
-                    className="bg-white "
-                  >
-                    {subCategory.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+              ))}
+            </select>
           </div>
-          <button
-            className="hover:bg-secondary hover:text-white soft bg-white text-primary rounded-xl w-full sm:w-fit center -translate-y-8 px-4 min-h-16 shadow-md"
-            onClick={() => handleSearch()}
-          >
-            <Icon icon="quill:search" className="text-3xl" />
-          </button>
+          <hr className="h-[40px] w-[.1px] bg-gray-300 hidden lg:block" />
+          <div className="flex items-center">
+            <label htmlFor="subCategory">Sub Category</label>
+            <select
+              id="subCategory"
+              className="bg-[#FDE7FF]  text-black text-sm ml-2 font-normal rounded-full block py-2 px-3"
+              value={filters.subCategoryId}
+              onChange={(e) => {
+                setFilters({ ...filters, subCategoryId: e.target.value });
+              }}
+            >
+              <option value="" className="bg-white p-2 shadow-lg rounded-xl">
+                All Sub categories
+              </option>
+              {subCategories?.map((subCategory) => (
+                <option
+                  key={subCategory.id}
+                  value={subCategory.id}
+                  className="bg-white "
+                >
+                  {subCategory.name}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
-      )}
+        <button
+          className="hover:bg-secondary hover:text-white soft bg-white text-primary rounded-xl w-full sm:w-fit center -translate-y-8 px-4 min-h-16 shadow-md"
+          onClick={() => handleSearch()}
+        >
+          <Icon icon="quill:search" className="text-3xl" />
+        </button>
+      </div>
+
       <div className="w-10/12 sm:w-full mx-auto pb-10">
         <div className="container mx-auto my-6">
           <div
-            className={`grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ${
-              !isFree && "-translate-y-24"
-            }`}
+            className={`grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-5`}
           >
             {exams?.map((item) => (
               <div

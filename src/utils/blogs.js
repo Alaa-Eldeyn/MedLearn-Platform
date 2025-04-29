@@ -99,4 +99,16 @@ const updateBlog = async (data) => {
   }
 };
 
-export { schema, addBlog, updateBlog, getBlog, getAllBlogs, deleteBlog };
+const getFilteredBlogs = async (filters) => {
+  try {
+    const categoryId = filters?.categoryId ? Number(filters.categoryId) : "";
+    const subCategoryId = filters?.subCategoryId ? Number(filters.subCategoryId) : "";
+    let response = await customAxios.get(`/Blog/GetBlogsFilteredPaginated?categoryId=${categoryId}&subCategoryId=${subCategoryId}`);
+    return response?.data;
+  } catch (error) {
+    console.log(error);
+    return { isSuccess: false };
+  }
+};
+
+export { schema, addBlog, updateBlog, getBlog, getAllBlogs, deleteBlog, getFilteredBlogs };

@@ -32,16 +32,22 @@ const getUploadedCourses = async (instructorId) => {
 };
 
 const getFilteredCourses = async (filters) => {
+  const categoryId = filters?.categoryId ? Number(filters.categoryId) : "";
+  const subCategoryId = filters?.subCategoryId
+    ? Number(filters.subCategoryId)
+    : "";
+  const minPrice = filters?.minPrice ? Number(filters.minPrice) : "";
+  const maxPrice = filters?.maxPrice ? Number(filters.maxPrice) : "";
   try {
-    let response = await customAxios.get("/Course/FilteredCourses", {
-      params: filters,
-    });
+    let response = await customAxios.get(`/Course/GetAllCoursesFilteredPaginated?categoryId=${categoryId}&subCategoryId=${subCategoryId}&minPrice=${minPrice}&maxPrice=${maxPrice}`);
     return response?.data;
   } catch (error) {
     console.error(error);
     return { isSuccess: false };
   }
 };
+
+
 
 const getAllCourses = async () => {
   try {

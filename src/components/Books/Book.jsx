@@ -1,22 +1,23 @@
 import { useEffect, useState } from "react";
 import { getAllCategories, getAllSubCategories } from "../../utils/categories";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { getAllBooks } from "../../utils/books";
+import { getAllBooks, getFilteredBooks } from "../../utils/books";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Book = () => {
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   const [filters, setFilters] = useState({
-    category: "",
-    subCategory: "",
+    categoryId: "",
+    subCategoryId: "",
   });
   const [books, setBooks] = useState([]);
+  const fetchBooks = async () => {
+    let res = await getAllBooks();
+    setBooks(res?.data);
+  };
   useEffect(() => {
-    const fetchBooks = async () => {
-      let res = await getAllBooks();
-      setBooks(res?.data);
-    };
     const getCategoriesAndSubs = async () => {
       let cat = await getAllCategories("Books");
       setCategories(cat?.data);
@@ -26,10 +27,19 @@ const Book = () => {
     getCategoriesAndSubs();
     fetchBooks();
   }, []);
+
   const handleSearch = async () => {
-    // let res = await getFilteredBooks(filters);
-    // setBooks(res?.data);
-    console.log(filters);
+    let res = await getFilteredBooks(filters);
+    if (res?.isSuccess) {
+      setBooks(res?.data?.items || []);
+    } else {
+      toast.error(res.message);
+      setFilters({
+        categoryId: "",
+        subCategoryId: "",
+      });
+      fetchBooks();
+    }
   };
 
   return (
@@ -41,9 +51,9 @@ const Book = () => {
             <select
               id="categories"
               className="bg-[#FDE7FF]  text-black text-sm ml-2 font-normal rounded-full block py-2 px-3"
-              value={filters.category}
+              value={filters.categoryId}
               onChange={(e) => {
-                setFilters({ ...filters, category: e.target.value });
+                setFilters({ ...filters, categoryId: e.target.value });
               }}
             >
               <option value="" className="bg-white p-2 shadow-lg rounded-xl">
@@ -66,6 +76,10 @@ const Book = () => {
             <select
               id="subCategory"
               className="bg-[#FDE7FF]  text-black text-sm ml-2 font-normal rounded-full block py-2 px-3"
+              value={filters.subCategoryId}
+              onChange={(e) => {
+                setFilters({ ...filters, subCategoryId: e.target.value });
+              }}
             >
               <option value="" className="bg-white p-2 shadow-lg rounded-xl">
                 All Sub categories

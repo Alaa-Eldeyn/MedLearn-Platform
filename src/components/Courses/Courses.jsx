@@ -23,16 +23,18 @@ const Courses = () => {
   const [paypalEmail, setPaypalEmail] = useState("");
   const [subCategories, setSubCategories] = useState([]);
   const [filters, setFilters] = useState({
-    category: "",
-    subCategory: "",
+    categoryId: "",
+    subCategoryId: "",
     minPrice: 0,
     maxPrice: 10000,
   });
+  const fetchCourses = async () => {
+    let res = await getFilteredCourses(filters);
+    if (res?.isSuccess) {
+      setCourses(res?.data?.items || []);
+    }
+  };
   useEffect(() => {
-    const fetchCourses = async () => {
-      let res = await getFilteredCourses(filters);
-      setCourses(res?.data);
-    };
     const getCategoriesAndSubs = async () => {
       let cat = await getAllCategories("Courses");
       setCategories(cat?.data);
@@ -44,7 +46,18 @@ const Courses = () => {
   }, []);
   const handleSearch = async () => {
     let res = await getFilteredCourses(filters);
-    setCourses(res?.data);
+    if (res?.isSuccess) {
+      setCourses(res?.data?.items);
+    } else {
+      toast.error(res.message);
+      setFilters({
+        category: "",
+        subCategory: "",
+        minPrice: 0,
+        maxPrice: 10000,
+      });
+      fetchCourses();
+    }
   };
   const handleLocalPayment = async () => {
     let { email } = getUser();
@@ -106,9 +119,9 @@ const Courses = () => {
             <select
               id="categories"
               className="bg-[#FDE7FF]  text-black text-sm ml-2 font-normal rounded-full block py-2 px-3"
-              value={filters.category}
+              value={filters.categoryId}
               onChange={(e) => {
-                setFilters({ ...filters, category: e.target.value });
+                setFilters({ ...filters, categoryId: e.target.value });
               }}
             >
               <option value="" className="bg-white p-2 shadow-lg rounded-xl">
@@ -131,9 +144,9 @@ const Courses = () => {
             <select
               id="subCategory"
               className="bg-[#FDE7FF]  text-black text-sm ml-2 font-normal rounded-full block py-2 px-3"
-              value={filters.subCategory}
+              value={filters.subCategoryId}
               onChange={(e) => {
-                setFilters({ ...filters, subCategory: e.target.value });
+                setFilters({ ...filters, subCategoryId: e.target.value });
               }}
             >
               <option value="" className="bg-white p-2 shadow-lg rounded-xl">

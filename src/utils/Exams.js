@@ -179,6 +179,27 @@ const deleteQuestion = async (id) => {
   return { isSuccess: false };
 };
 
+const getFilteredExams = async (filters) => {
+  try {
+    const categoryId = filters?.categoryId ? Number(filters.categoryId) : "";
+    const subCategoryId = filters?.subCategoryId
+      ? Number(filters.subCategoryId)
+      : "";
+    const isPremium = !filters.isPremium;
+    let response = await customAxios.get(
+      `/StandardTest/GetStandardTestsFilteredPaginated?categoryId=${categoryId}&subCategoryId=${subCategoryId}&isPremium=${isPremium}`
+    );
+    console.log(
+      `/StandardTest/GetStandardTestsFilteredPaginated?categoryId=${categoryId}&subCategoryId=${subCategoryId}&isPremium=${isPremium}`
+    );
+
+    return response?.data;
+  } catch (error) {
+    console.log(error);
+    return { isSuccess: false };
+  }
+};
+
 export {
   getAllExams,
   addExam,
@@ -192,4 +213,5 @@ export {
   getAllFreeExams,
   getAllPremiumExams,
   searchExams,
+  getFilteredExams,
 };

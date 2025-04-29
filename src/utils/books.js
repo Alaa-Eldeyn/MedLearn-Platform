@@ -96,4 +96,16 @@ const updateBook = async (id, data) => {
   }
 };
 
-export { schema, addBook, updateBook, getBook, getAllBooks, deleteBook };
+const getFilteredBooks = async (filters) => {
+  try {
+    const categoryId = filters?.categoryId ? Number(filters.categoryId) : "";
+    const subCategoryId = filters?.subCategoryId ? Number(filters.subCategoryId) : "";
+    let response = await customAxios.get(`/Book/GetBooksFilteredPaginated?categoryId=${categoryId}&subCategoryId=${subCategoryId}`);
+    return response?.data;
+  } catch (error) {
+    console.log(error);
+    return { isSuccess: false };
+  }
+};
+
+export { schema, addBook, updateBook, getBook, getAllBooks, deleteBook, getFilteredBooks };

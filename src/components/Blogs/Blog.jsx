@@ -1,24 +1,25 @@
 import { useEffect, useState } from "react";
 import { getAllCategories, getAllSubCategories } from "../../utils/categories";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { getAllBlogs } from "../../utils/blogs";
+import { getAllBlogs, getFilteredBlogs } from "../../utils/blogs";
 import BlogCard from "./BlogCard";
+import { toast } from "react-toastify";
 
 const Blog = () => {
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   const [filters, setFilters] = useState({
-    category: "",
-    subCategory: "",
+    categoryId: "",
+    subCategoryId: "",
   });
   const [blogs, setBlogs] = useState([]);
+  const fetchBlogs = async () => {
+    let res = await getAllBlogs();
+    if (res?.isSuccess) {
+      setBlogs(res?.data);
+    }
+  };
   useEffect(() => {
-    const fetchBlogs = async () => {
-      let res = await getAllBlogs();
-      if (res?.isSuccess) {
-        setBlogs(res?.data);
-      }
-    };
     const getCategoriesAndSubs = async () => {
       let cat = await getAllCategories("Blogs");
       setCategories(cat?.data);
@@ -29,9 +30,19 @@ const Blog = () => {
     fetchBlogs();
   }, []);
   const handleSearch = async () => {
-    // let res = await getFilteredBlogs(filters);
-    // setBlogs(res?.data);
     console.log(filters);
+    let res = await getFilteredBlogs(filters);
+    console.log(res?.data?.items || []);
+    if (res?.isSuccess) {
+      setBlogs(res?.data?.items || []);
+    } else {
+      toast.error(res.message);
+      setFilters({
+        categoryId: "",
+        subCategoryId: "",
+      });
+      fetchBlogs();
+    }
   };
   return (
     <>
@@ -42,9 +53,9 @@ const Blog = () => {
             <select
               id="categories"
               className="bg-[#FDE7FF]  text-black text-sm ml-2 font-normal rounded-full block py-2 px-3"
-              value={filters.category}
+              value={filters.categoryId}
               onChange={(e) => {
-                setFilters({ ...filters, category: e.target.value });
+                setFilters({ ...filters, categoryId: e.target.value });
               }}
             >
               <option value="" className="bg-white p-2 shadow-lg rounded-xl">
@@ -67,6 +78,10 @@ const Blog = () => {
             <select
               id="subCategory"
               className="bg-[#FDE7FF]  text-black text-sm ml-2 font-normal rounded-full block py-2 px-3"
+              value={filters.subCategoryId}
+              onChange={(e) => {
+                setFilters({ ...filters, subCategoryId: e.target.value });
+              }}
             >
               <option value="" className="bg-white p-2 shadow-lg rounded-xl">
                 All Sub categories
