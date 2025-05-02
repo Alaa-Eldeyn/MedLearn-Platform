@@ -65,23 +65,28 @@ const Details = () => {
     const fetchCourse = async () => {
       try {
         let course = await getOneCourse(id);
+        console.log(course);
+        
         if (course?.isSuccess) {
           setCourse(course?.data);
           setIsMine(true);
+        } else if (!course?.isSuccess) {
+          try {
+            let course = await searchForCourse(name);
+            setCourse(course?.data);
+            setIsMine(false);
+          } catch (error) {
+            console.log(error);
+          }
+        } else {
+          toast.error("Course not found.");
         }
+
       } catch (error) {
         console.error(error);
       }
 
-      if (!course?.isSuccess) {
-        try {
-          let course = await searchForCourse(name);
-          setCourse(course?.data);
-          setIsMine(false);
-        } catch (error) {
-          console.log(error);
-        }
-      }
+      
     };
     fetchCourse();
   }, [name, id]);

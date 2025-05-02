@@ -37,8 +37,9 @@ const MyJoinedCourses = () => {
                   <div className="relative w-full">
                     <img
                       className="w-full rounded-2xl"
-                      src="https://instructor-academy.onlinecoursehost.com/content/images/2023/05/101_-What-Online-Courses-Are-Most-In-Demand-In-2023_.jpg"
-                      // src={item?.thumbnailURL}
+                      src={`${import.meta.env.VITE_BASE_URL}/${
+                        item?.thumbnailURL
+                      }`}
                       alt="Course image preview"
                     />
                     <div className="center !gap-2 lg:gap-3 w-[90%] mx-auto rounded-full p-3 border-[5px] border-white -translate-y-8  bg-[#CC775D] text-white text-xs soft -mb-8">
