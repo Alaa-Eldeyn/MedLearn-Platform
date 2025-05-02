@@ -12,6 +12,7 @@ import {
 import { useParams } from "react-router-dom";
 import { getTestQuestions } from "../../utils/Exams";
 import ShowAnswers from "./ShowAnswers";
+import CircularTimer from "./Timer";
 
 const FreeTest = () => {
   const [questions, setQuestions] = useState([]);
@@ -23,6 +24,7 @@ const FreeTest = () => {
   const [receipt, setReceipt] = useState(null);
   const [paypalEmail, setPaypalEmail] = useState("");
   const params = useParams();
+  const duration = params?.duration || 0;
   const [showAnswers, setShowAnswers] = useState(false);
   // const [filter, setFilter] = useState("all");
   const nextQuestion = () => {
@@ -211,7 +213,7 @@ const FreeTest = () => {
                 Upgrade Now
               </button>
             </div>
-            <div className="flex gap-x-12">
+            <div className="flex gap-x-12 w-full">
               <div className="rounded-xl bg-white p-5 border-2 border-[#EC8AB3] h-96 md:w-[460px] ">
                 <h2 className="font-bold">
                   Questions {`(${questions?.length || 0})`}
@@ -272,7 +274,7 @@ const FreeTest = () => {
                 </div>
               </div>
               {questions?.length > 0 && (
-                <div className="flex-1">
+                <div className="flex-1 ">
                   {/* Current Question and Answer Options */}
                   <div>
                     <h3 className="font-bold text-xl mb-3">
@@ -330,6 +332,10 @@ const FreeTest = () => {
                   </div>
                 </div>
               )}
+              <CircularTimer
+                duration={duration * 60}
+                redirectPath="/academy/free-exams"
+              />
             </div>
           </div>
         </>

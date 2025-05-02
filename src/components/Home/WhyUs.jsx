@@ -13,7 +13,7 @@ const WhyUs = () => {
           {whyUs.map((item, index) => (
             <div
               key={index}
-              className=" group h-[210px] bg-white rounded-[40px] border shadow-lg relative hover:ring hover:ring-secondary soft hover:scale-[102%] hover:shadow-xl"
+              className=" group min-h-[210px] bg-white rounded-[40px] border shadow-lg relative hover:ring hover:ring-secondary soft hover:scale-[102%] hover:shadow-xl"
             >
               <div
                 style={{ backgroundColor: item.iconColor }}
@@ -23,9 +23,9 @@ const WhyUs = () => {
                   {item.icon}
                 </span>
               </div>
-              <div className="flex flex-col items-center justify-center mt-10 p-4">
+              <div className="flex flex-col items-center justify-center mt-10 p-5">
                 <h2
-                  className="text-xl font-bold  my-2"
+                  className="text-xl font-bold text-center my-2"
                   style={{ color: item.iconColor }}
                 >
                   {item.title}

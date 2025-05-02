@@ -28,11 +28,11 @@ const Home = () => {
       <ScrollUp />
       <Header />
       <Hero />
-      <WhyUs />
       <Courses courses={items?.recentCoursesDTOs} />
       <Quizzes />
       <Blogs blogs={items?.recentblogsDTOs} />
       <Books books={items?.recentBooksDTOs} />
+      <WhyUs />
       <Footer />
     </div>
   );

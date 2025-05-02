@@ -150,12 +150,18 @@ const EnrollModal = ({
                 If you’d like to pay using Vodafone Cash or InstaPay, please
                 attach a payment receipt (Transaction Image) here and contact
                 the admin at for assistance.
-                <a
-                  href="https://wa.me/+201015800248"
-                  className=" font-bold text-[#E2508D] block mt-3"
-                >
-                  201015800248
-                </a>
+                <p className="text-start font-bold block mt-3">
+                  <span>InstaPay: </span>
+                  <span className="text-[#E2508D] ">ehab.naser@instapay</span>
+                </p>
+                <p className="text-start font-bold block mt-3">
+                  <span>Vodafone Cash: </span>
+                  <span className="text-[#E2508D] ">+201099970334</span>
+                </p>
+                <p className="text-start font-bold block mt-3">
+                  <span>QNB EGYPT: </span>
+                  <span className="text-[#E2508D] ">1130654364992</span>
+                </p>
               </div>
               <label htmlFor="file" className="text-start block my-1">
                 Upload a receipt

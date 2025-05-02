@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 const Courses = ({ courses }) => {
   return (
     <>
-      <div className="w-10/12 sm:w-full mx-auto pb-32">
+      <div className="w-10/12 sm:w-full mx-auto pb-32 pt-12">
         <MainTitle
           title={"Our Courses"}
           desc={"Explore Our Top Medical Courses"}

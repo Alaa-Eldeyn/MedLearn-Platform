@@ -61,7 +61,6 @@ const Exam = ({ isFree }) => {
     fetchExams();
   }, [isFree]);
   const handleSearch = async () => {
-    
     let res = await getFilteredExams({ ...filters, isPremium: isFree });
     if (res?.isSuccess) {
       setExams(res?.data?.tests || []);
@@ -248,7 +247,9 @@ const Exam = ({ isFree }) => {
                   </div>
                   <span className="text-xs">{item?.instructorFullName}</span>
                   <button
-                    onClick={() => navigate(`${item?.id}`)}
+                    onClick={() =>
+                      navigate(`${item?.id}/${item?.durationInMinutes}`)
+                    }
                     className="center text-white bg-primary p-3 w-full rounded-xl mt-2"
                   >
                     Start Test Now

@@ -58,25 +58,31 @@ const Footer = () => {
         <div className="w-56 mt-10">
           <ul className="space-y-3 text-white">
             <li>
-              <Link to="/privacy-policy">About Us</Link>
+              <Link to="/about-us">About Us</Link>
             </li>
             <li>
               <Link to="/privacy-policy">Privacy Policy</Link>
             </li>
             <li>
-              <Link to="/privacy-policy">Terms of service</Link>
+              <Link to="/terms-of-service">Terms of service</Link>
             </li>
             <li className="flex gap-4">
-              <Link to={``}>
+              <Link
+              target="_blank" 
+                to={`https://www.instagram.com/practice2pass/profilecard/?igsh=MXdqNjFzaWp0bmJ5Nw==`}
+              >
                 <Icon icon="skill-icons:instagram" className="size-6" />
               </Link>
-              <Link to={``}>
+              <Link 
+              target="_blank" to={`https://t.me/practice2pass`}>
                 <Icon icon="logos:telegram" className="size-6" />
               </Link>
-              <Link to={``}>
+              <Link 
+              target="_blank" to={`https://x.com/practise2pass`}>
                 <Icon icon="bi:twitter-x" className="text-white size-6" />
               </Link>
-              <Link to={``}>
+              <Link 
+              target="_blank" to={`https://www.facebook.com/share/g/1XvpthZaMt/`}>
                 <Icon icon="logos:facebook" className="size-6" />
               </Link>
             </li>

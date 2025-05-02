@@ -15,8 +15,8 @@ const whyUs = [
       </svg>
     ),
     iconColor: "#E2508D",
-    title: "Expert-Led Courses",
-    body: "Learn from industry-leading professionals and academic experts.",
+    title: "Flexible Learning, Real Results",
+    body: "Study anytime, anywhere with full access to online materials, live review sessions, and realistic mock exams that feel just like test day.",
   },
   {
     iconColor: "#8c49d0",
@@ -33,8 +33,8 @@ const whyUs = [
         ></path>
       </svg>
     ),
-    title: "Up-to-Date Research",
-    body: "Stay ahead with the latest medical studies and reports.",
+    title: "Expert-Led Learning",
+    body: "Get trained by certified professionals, clinicians, and exam experts who know what it takes to succeed on USMLE, NPTE, and Pearson VUE exams.",
   },
   {
     iconColor: "#cc775d",
@@ -51,8 +51,8 @@ const whyUs = [
         ></path>
       </svg>
     ),
-    title: "Career Growth",
-    body: "Gain skills and certifications to advance your career in the medical field.",
+    title: "Smart, Up-to-Date Content",
+    body: "Access constantly updated study materials, practice questions, and guides based on the latest medical standards and research.",
   },
   {
     iconColor: "#cb69d3",
@@ -78,8 +78,8 @@ const whyUs = [
         </g>
       </svg>
     ),
-    title: "Flexible Learning",
-    body: "Study at your own pace with access to online materials anytime, anywhere.",
+    title: "Career-Focused Certification",
+    body: "Build a path toward licensure and success—our courses are designed to help you pass exams and grow your healthcare career.",
   },
 ];
 

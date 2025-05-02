@@ -57,15 +57,15 @@ const ViewBlog = () => {
         </div>
         <div className="space-y-5">
           <div>
-            <p className="font-bold">Introduction</p>
+            {/* <p className="font-bold">Introduction</p> */}
             <p>{blog?.intro}</p>
           </div>
           <div>
-            <p className="font-bold">Main Body</p>
+            {/* <p className="font-bold">Main Body</p> */}
             <p>{blog?.content}</p>
           </div>
           <div>
-            <p className="font-bold">Conclusion</p>
+            {/* <p className="font-bold">Conclusion</p> */}
             <p>{blog?.conclusion}</p>
           </div>
         </div>

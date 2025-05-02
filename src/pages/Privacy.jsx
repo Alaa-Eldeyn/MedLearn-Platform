@@ -147,8 +147,15 @@ const Privacy = () => {
         </p>
         <ul className="list-disc list-inside">
           <li>Practice 2 Pass Support</li>
-          <li>Email: support@medlearnhub.com</li>
-          <li>Phone: +201015800248</li>
+          <li>
+            Email:{" "}
+            <a href="mailto:practicetopassnow1@gmail.com">
+              practicetopassnow1@gmail.com
+            </a>
+          </li>
+          <li>
+            Phone: <a href="tel:+201099970334">+201099970334</a>{" "}
+          </li>
         </ul>
         <Link
           to={`/`}

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import quiz from "../../assets/quiz.svg"
+import quiz from "../../assets/Exam.jpg"
 const Quizzes = () => {
   return (
     <section className="border-y-[5px] border-dashed border-white bg-[#842A8C] text-white">
@@ -23,11 +23,11 @@ const Quizzes = () => {
           </Link>
         </div>
         <div className="hidden lg:mt-0 lg:flex relative">
-          <div className="w-[347px] h-[429px] ">
+          <div className="w-[500px] rotate-12">
             <img
               src={quiz}
               alt="quiz image"
-              className="absolute -top-16 hidden lg:flex "
+              // className="absolute -top-16 hidden lg:flex "
             />
           </div>
         </div>

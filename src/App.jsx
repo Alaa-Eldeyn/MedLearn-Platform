@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import {
+  AboutUs,
   AllCourses,
   Blogs,
   Books,
@@ -7,6 +8,7 @@ import {
   Home,
   MyCourses,
   Profile,
+  TermsOfService,
 } from "./pages";
 import { ForgetPass, Login, Register, ResetPass } from "./components/auth";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -35,6 +37,8 @@ function App() {
         <Route path="/forget-password" element={<ForgetPass />} />
         <Route path="/reset-password" element={<ResetPass />} />
         <Route path="/privacy-policy" element={<Privacy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="/about-us" element={<AboutUs />} />
         <Route
           path="/academy"
           element={
@@ -52,9 +56,9 @@ function App() {
           <Route path="blogs" element={<Blogs />} />
           <Route path="blogs/:id" element={<ViewBlog />} />
           <Route path="free-exams" element={<Exams isFree={true} />} />
-          <Route path="free-exams/:id" element={<FreeTest />} />
+          <Route path="free-exams/:id/:duration" element={<FreeTest />} />
           <Route path="premium-exams" element={<Exams isFree={false} />} />
-          <Route path="premium-exams/:id" element={<PremiumTest />} />
+          <Route path="premium-exams/:id/:duration" element={<PremiumTest />} />
           <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>

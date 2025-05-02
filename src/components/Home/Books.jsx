@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import www from "../../assets/www.svg";
+import www from "../../assets/Book.jpg";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
@@ -10,7 +10,7 @@ const Books = ({ books }) => {
   return (
     <>
       <section className="mt-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-[#97355E] p-8 sm:p-12 md:p-16 rounded-2xl my-10 flex justify-between items-center lg:gap-6">
+        <div className="bg-[#97355E] p-8 sm:p-12 rounded-2xl my-10 flex justify-between items-center lg:gap-6">
           <div className="text-center lg:text-left lg:w-1/2 overflow-hidden">
             <h1 className="text-2xl font-bold text-[#F799C0]">
               Explore Essential Medical Books!
@@ -57,7 +57,7 @@ const Books = ({ books }) => {
             </div>
           </div>
 
-          <div className="w-[24rem] hidden lg:block">
+          <div className="w-[32rem] hidden lg:block">
             <img
               src={www}
               className="hidden lg:flex rounded-3xl "
