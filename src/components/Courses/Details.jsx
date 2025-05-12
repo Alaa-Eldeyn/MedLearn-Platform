@@ -88,7 +88,7 @@ const Details = () => {
     };
 
     fetchCourse();
-    window.document.scrollingElement?.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   }, [name, id]);
 
 

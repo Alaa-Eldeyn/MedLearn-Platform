@@ -36,10 +36,9 @@ const MyJoinedCourses = () => {
                 >
                   <div className="relative w-full">
                     <img
-                      className="w-full rounded-2xl"
-                      src={`${import.meta.env.VITE_BASE_URL}/${
-                        item?.thumbnailURL
-                      }`}
+                      className="w-full rounded-2xl h-52 bg-gray-200"
+                      src={`${import.meta.env.VITE_BASE_URL}/${item?.thumbnailURL
+                        }`}
                       alt="Course image preview"
                     />
                     <div className="center !gap-2 lg:gap-3 w-[90%] mx-auto rounded-full p-3 border-[5px] border-white -translate-y-8  bg-[#CC775D] text-white text-xs soft -mb-8">
@@ -66,12 +65,11 @@ const MyJoinedCourses = () => {
                     </div>
                     <p className="text-gray-500 my-2 text-sm h-14">
                       {item?.objectives?.map((obj) => {
-                        return `${obj.description}${
-                          item?.objectives?.indexOf(obj) ===
-                          item?.objectives?.length - 1
+                        return `${obj.description}${item?.objectives?.indexOf(obj) ===
+                            item?.objectives?.length - 1
                             ? "."
                             : ","
-                        }`;
+                          }`;
                       })}
                     </p>
                     <span className="text-xs">
