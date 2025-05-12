@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllCategories, getAllSubCategories } from "../../utils/categories";
+import { getAllCategories, getSubs } from "../../utils/categories";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { getAllBlogs, getFilteredBlogs } from "../../utils/blogs";
 import BlogCard from "./BlogCard";
@@ -19,20 +19,28 @@ const Blog = () => {
       setBlogs(res?.data);
     }
   };
+
   useEffect(() => {
-    const getCategoriesAndSubs = async () => {
-      let cat = await getAllCategories("Blogs");
-      setCategories(cat?.data);
-      let subs = await getAllSubCategories("Blogs");
-      setSubCategories(subs?.data);
+    const fetchCategories = async () => {
+      const res = await getAllCategories("Blogs");
+      setCategories(res?.data || []);
     };
-    getCategoriesAndSubs();
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
     fetchBlogs();
   }, []);
+  useEffect(() => {
+    const fetchSubCategories = async () => {
+      let subs = await getSubs(filters.categoryId);
+      setSubCategories(subs?.data);
+    };
+    fetchSubCategories();
+  }, [filters.categoryId]);
+
   const handleSearch = async () => {
-    console.log(filters);
     let res = await getFilteredBlogs(filters);
-    console.log(res?.data?.items || []);
     if (res?.isSuccess) {
       setBlogs(res?.data?.items || []);
     } else {
@@ -61,7 +69,7 @@ const Blog = () => {
               <option value="" className="bg-white p-2 shadow-lg rounded-xl">
                 All Categories
               </option>
-              {categories.map((category) => (
+              {categories?.map((category) => (
                 <option
                   key={category.id}
                   value={category.id}
@@ -86,7 +94,7 @@ const Blog = () => {
               <option value="" className="bg-white p-2 shadow-lg rounded-xl">
                 All Sub categories
               </option>
-              {subCategories.map((subCategory) => (
+              {subCategories?.map((subCategory) => (
                 <option
                   key={subCategory.id}
                   value={subCategory.id}

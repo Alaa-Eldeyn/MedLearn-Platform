@@ -23,11 +23,11 @@ const Details = () => {
   const [isMine, setIsMine] = useState(false);
 
   const handleLocalPayment = async () => {
-    let { id } = getUser();
+    let user = getUser();
     let data = {
       InstructorId: course?.instructorId,
       CourseId: course?.id,
-      StudentId: id,
+      StudentEmail: user?.email,
       TransactionImage: receipt,
     };
     let res = await requestLocalEnroll(data);
@@ -64,32 +64,33 @@ const Details = () => {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        let course = await getOneCourse(id);
-        console.log(course);
-        
-        if (course?.isSuccess) {
-          setCourse(course?.data);
-          setIsMine(true);
-        } else if (!course?.isSuccess) {
-          try {
-            let course = await searchForCourse(name);
-            setCourse(course?.data);
-            setIsMine(false);
-          } catch (error) {
-            console.log(error);
-          }
-        } else {
-          toast.error("Course not found.");
-        }
+        const res = await getOneCourse(id);
 
+        if (res?.isSuccess && res?.data) {
+          setCourse(res.data);
+          setIsMine(true);
+          return;
+        } else {
+          const searchRes = await searchForCourse(name);
+
+          if (searchRes?.isSuccess && searchRes?.data) {
+            setCourse(searchRes.data);
+            setIsMine(false);
+            return;
+          } else {
+            toast.error("Course not found.");
+          }
+        }
       } catch (error) {
         console.error(error);
+        toast.error("Something went wrong.");
       }
-
-      
     };
+
     fetchCourse();
+    window.document.scrollingElement?.scrollTo(0, 0)
   }, [name, id]);
+
 
   return (
     <>
@@ -109,7 +110,7 @@ const Details = () => {
       <div className="container flex justify-between -translate-y-10 flex-col-reverse sm:flex-row">
         <div className=" -translate-y-10 sm:translate-y-0">
           <h1 className="text-2xl font-extrabold text-primary sm:text-white">
-            Advanced Cardiology: Diagnosis and Treatment
+            {name}
           </h1>
           <section className="my-6">
             <h2 className="text-purple-800 font-semibold text-lg mb-2">
@@ -165,7 +166,7 @@ const Details = () => {
                 <span className="line-clamp-1">{course?.subCategoryName}</span>
               </div>
             </div>
-            {isMine ? (
+            {isMine || course?.type == 0 ? (
               <Link
                 to={`/academy/my-courses/${id}`}
                 className="center text-white bg-primary p-3 w-full rounded-full mt-3"
@@ -183,11 +184,13 @@ const Details = () => {
                 Enroll Now
               </button>
             )}
+            <a target="_blank" href={course?.preview} className="center text-[#E2508D] border border-[#E2508D] py-2 px-5 w-full rounded-full mt-2">Watch a trial lesson</a>
+
           </div>
         </div>
       </div>
       <div className="container">
-        <RelatedCourses/>
+        <RelatedCourses />
       </div>
     </>
   );

@@ -197,7 +197,7 @@ const FreeTest = () => {
       ) : (
         <>
           <div className="flex gap-5 flex-wrap pt-10 pb-20 container !select-none">
-            <div className="flex justify-between items-center gap-5 bg-white p-5 rounded-xl shadow mb-10">
+            <div className="flex justify-between items-center flex-col md:flex-row gap-5 bg-white p-5 rounded-xl shadow mb-10">
               <div>
                 <p className="font-bold">Unlock Your Full Potential!</p>
                 <p className="mt-1 text-sm">
@@ -213,40 +213,11 @@ const FreeTest = () => {
                 Upgrade Now
               </button>
             </div>
-            <div className="flex gap-x-12 w-full">
+            <div className="flex gap-12 flex-col md:flex-row w-full">
               <div className="rounded-xl bg-white p-5 border-2 border-[#EC8AB3] h-96 md:w-[460px] ">
                 <h2 className="font-bold">
                   Questions {`(${questions?.length || 0})`}
                 </h2>
-                {/* Filter Buttons */}
-                {/* <div className="space-x-2 pb-5 pt-2 text-xs">
-            <button
-              className={`px-3 py-1 rounded-lg soft hover:text-white bg-[#FFF4F9] hover:bg-[#EC8AB3] ${
-                filter == "all" && "!bg-[#EC8AB3] !text-white"
-              }`}
-              onClick={() => setFilter("all")}
-            >
-              All
-            </button>
-            <button
-              className={`px-3 py-1 rounded-lg soft hover:text-white bg-[#FFF4F9] hover:bg-[#EC8AB3] ${
-                filter == "answered" && "!bg-[#EC8AB3] !text-white"
-              }`}
-              onClick={() => setFilter("answered")}
-            >
-              Answered Questions
-            </button>
-            <button
-              className={`px-3 py-1 rounded-lg soft hover:text-white bg-[#FFF4F9] hover:bg-[#EC8AB3] ${
-                filter == "unanswered" && "!bg-[#EC8AB3] !text-white"
-              }`}
-              onClick={() => setFilter("unanswered")}
-            >
-              Unanswered Questions
-            </button>
-          </div> */}
-
-                {/* Question List with Indicator Circles */}
                 <div className="space-y-2 overflow-auto h-72 mt-5 pr-2 pink-sc">
                   {questions?.map((question, i) => (
                     <div
@@ -267,7 +238,7 @@ const FreeTest = () => {
                         }`}
                       />
                       <p className="line-clamp-1 flex-1">
-                        {`${question?.id}. `} {question?.description}
+                        {`${i+1}. `} {question?.description}
                       </p>
                     </div>
                   ))}
@@ -278,7 +249,7 @@ const FreeTest = () => {
                   {/* Current Question and Answer Options */}
                   <div>
                     <h3 className="font-bold text-xl mb-3">
-                      {`${questions[currentQuestionIndex]?.id}. `}
+                      {`${currentQuestionIndex + 1}. `}
                       {questions[currentQuestionIndex]?.description}
                     </h3>
                     {questions[currentQuestionIndex]?.answers.map((answer) => (
@@ -332,10 +303,12 @@ const FreeTest = () => {
                   </div>
                 </div>
               )}
-              <CircularTimer
-                duration={duration * 60}
-                redirectPath="/academy/free-exams"
-              />
+              <div className="flex justify-center">
+                <CircularTimer
+                  duration={duration * 60}
+                  redirectPath="/academy/free-exams"
+                />
+              </div>
             </div>
           </div>
         </>

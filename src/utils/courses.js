@@ -39,15 +39,13 @@ const getFilteredCourses = async (filters) => {
   const minPrice = filters?.minPrice ? Number(filters.minPrice) : "";
   const maxPrice = filters?.maxPrice ? Number(filters.maxPrice) : "";
   try {
-    let response = await customAxios.get(`/Course/GetAllCoursesFilteredPaginated?categoryId=${categoryId}&subCategoryId=${subCategoryId}&minPrice=${minPrice}&maxPrice=${maxPrice}`);
+    let response = await customAxios.get(`/Course/GetAllCoursesFilteredPaginated?categoryId=${categoryId}&subCategoryId=${subCategoryId}&minPrice=${minPrice}&maxPrice=${maxPrice}&pageSize=${filters?.pageSize}`);
     return response?.data;
   } catch (error) {
     console.error(error);
     return { isSuccess: false };
   }
 };
-
-
 
 const getAllCourses = async () => {
   try {

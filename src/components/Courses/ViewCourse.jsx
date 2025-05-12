@@ -52,7 +52,7 @@ const ViewCourse = () => {
       Swal.fire({
         icon: "error",
         title: "Keep Going!",
-        text: "You’ve completed the course [Course Name], but don’t worry if you didn’t pass the final exam this time. Every learning journey comes with challenges, and this is just one step toward your success. Review the material and try again when you're ready — we believe in your ability to succeed!",
+        text: `You’ve completed the course ${course?.title}, but don’t worry if you didn’t pass the final exam this time. Every learning journey comes with challenges, and this is just one step toward your success. Review the material and try again when you're ready — we believe in your ability to succeed!`,
       });
     }
   };

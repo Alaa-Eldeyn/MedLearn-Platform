@@ -39,7 +39,7 @@ const CourseCard = ({ course }) => {
         <span className="text-xs">{course?.instructorFullName}</span>
         <Link
           to={`/academy/courses/${course?.title}/${course?.id}`}
-          className="block text-center text-[#E2508D] border border-[#E2508D] p-3 w-full rounded-full mt-2"
+          className="block text-center text-white border bg-primary p-3 w-full rounded-full mt-2"
         >
           See More
         </Link>

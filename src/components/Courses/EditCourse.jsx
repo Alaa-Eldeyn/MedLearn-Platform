@@ -84,13 +84,15 @@ const EditCourse = () => {
   const addToRequirements = (e) => {
     e.preventDefault();
     if (!currentReq.current.value) return;
-    setRequirements([...requirements, currentReq.current.value]);
+    // Fix: Add as an object with description property to match API structure
+    setRequirements([...requirements, { description: currentReq.current.value }]);
     currentReq.current.value = "";
   };
   const addToObjectives = (e) => {
     e.preventDefault();
     if (!currentObj.current.value) return;
-    setObjectives([...objectives, currentObj.current.value]);
+    // Fix: Add as an object with description property to match API structure
+    setObjectives([...objectives, { description: currentObj.current.value }]);
     currentObj.current.value = "";
   };
   const handleDeleteVideo = async (videoId) => {
@@ -179,8 +181,15 @@ const EditCourse = () => {
         setValue("duration", res?.data?.durationInhours?.toString());
         setValue("price", res?.data?.price?.toString());
         setValue("preview", res?.data?.preview);
-        setRequirements(res?.data?.requirements);
-        setObjectives(res?.data?.objectives);
+        // Make sure requirements and objectives are properly formatted
+        const formattedRequirements = res?.data?.requirements?.map(req => 
+          typeof req === 'string' ? { description: req } : req
+        );
+        const formattedObjectives = res?.data?.objectives?.map(obj => 
+          typeof obj === 'string' ? { description: obj } : obj
+        );
+        setRequirements(formattedRequirements || []);
+        setObjectives(formattedObjectives || []);
         let subs = await getAllSubCategories("Courses");
         setSubCategories(subs?.data);
         setValue("subCategoryID", res?.data?.subCategoryId?.toString());

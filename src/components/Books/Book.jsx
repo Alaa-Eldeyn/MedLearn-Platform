@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllCategories, getAllSubCategories } from "../../utils/categories";
+import { getAllCategories, getSubs } from "../../utils/categories";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { getAllBooks, getFilteredBooks } from "../../utils/books";
 import { Link } from "react-router-dom";
@@ -17,17 +17,25 @@ const Book = () => {
     let res = await getAllBooks();
     setBooks(res?.data);
   };
-  useEffect(() => {
-    const getCategoriesAndSubs = async () => {
-      let cat = await getAllCategories("Books");
-      setCategories(cat?.data);
-      let subs = await getAllSubCategories("Books");
-      setSubCategories(subs?.data);
+
+    useEffect(() => {
+    const fetchCategories = async () => {
+      const res = await getAllCategories("Books");
+      setCategories(res?.data || []);
     };
-    getCategoriesAndSubs();
-    fetchBooks();
+    fetchCategories();
   }, []);
 
+  useEffect(() => {
+    fetchBooks();
+  }, []);
+  useEffect(() => {
+    const fetchSubCategories = async () => {
+      let subs = await getSubs(filters.categoryId);
+      setSubCategories(subs?.data);
+    };
+    fetchSubCategories();
+  }, [filters.categoryId]);
   const handleSearch = async () => {
     let res = await getFilteredBooks(filters);
     if (res?.isSuccess) {

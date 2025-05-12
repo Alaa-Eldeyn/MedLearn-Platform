@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllCategories, getAllSubCategories } from "../../utils/categories";
+import { getAllCategories, getSubs } from "../../utils/categories";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import {
   getAllFreeExams,
@@ -20,7 +20,7 @@ const Exam = ({ isFree }) => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
-  const [enrollPrice] = useState(100);
+  const [enrollPrice] = useState(50);
   const [enrollModal, setEnrollModal] = useState(false);
   const [receipt, setReceipt] = useState(null);
   const [paypalEmail, setPaypalEmail] = useState("");
@@ -29,15 +29,23 @@ const Exam = ({ isFree }) => {
     subCategoryId: "",
   });
   const [exams, setExams] = useState([]);
+    useEffect(() => {
+    const fetchCategories = async () => {
+      const res = await getAllCategories("Exams");
+      setCategories(res?.data || []);
+    };
+    fetchCategories();
+  }, []);
+
+
   useEffect(() => {
-    const getCategoriesAndSubs = async () => {
-      let cat = await getAllCategories("Exams");
-      setCategories(cat?.data);
-      let subs = await getAllSubCategories("Exams");
+    const fetchSubCategories = async () => {
+      let subs = await getSubs(filters.categoryId);
       setSubCategories(subs?.data);
     };
-    getCategoriesAndSubs();
-  }, []);
+    fetchSubCategories();
+  }, [filters.categoryId]);
+  
   const fetchExams = async () => {
     setExams([]);
     if (isFree) {
@@ -60,6 +68,7 @@ const Exam = ({ isFree }) => {
   useEffect(() => {
     fetchExams();
   }, [isFree]);
+
   const handleSearch = async () => {
     let res = await getFilteredExams({ ...filters, isPremium: isFree });
     if (res?.isSuccess) {

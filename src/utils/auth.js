@@ -150,10 +150,12 @@ const logIn = async (data) => {
       addToken(response?.data?.token);
       addUser(response?.data?.data);
     } else {
-      if (response?.data?.message === "can't find this user name") {
+      if (response?.data?.message === "Can't find this username") {
         toast.error("Please enter the email you registered with");
-      } else {
-        toast.error("Wrong Password");
+      } else if(response?.data?.message === "This user email is not confirmed") {
+        toast.error("This email is not confirmed, Check your spam mails");
+      }else{
+        toast.error(response?.data?.message);
       }
       console.log("error", response?.data);
     }

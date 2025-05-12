@@ -188,7 +188,7 @@ const PremiumTest = () => {
                       }`}
                     />
                     <p className="line-clamp-1 flex-1">
-                      {`${question?.id}. `} {question?.description}
+                      {`${i+1}. `} {question?.description}
                     </p>
                   </div>
                 ))}
@@ -200,7 +200,7 @@ const PremiumTest = () => {
                 {/* Current Question and Answer Options */}
                 <div>
                   <h3 className="font-bold text-xl mb-3">
-                    {`${questions[currentQuestionIndex]?.id}. `}
+                    {`${currentQuestionIndex + 1}. `}
                     {questions[currentQuestionIndex]?.description}
                   </h3>
                   {questions[currentQuestionIndex]?.answers?.map((answer) => (
@@ -252,10 +252,12 @@ const PremiumTest = () => {
                 </div>
               </div>
             )}
-            <CircularTimer
-              duration={duration * 60}
-              redirectPath="/academy/premium-exams"
-            />
+            <div className="flex justify-center">
+              <CircularTimer
+                duration={duration * 60}
+                redirectPath="/academy/premium-exams"
+              />
+            </div>
           </div>
         </>
       )}

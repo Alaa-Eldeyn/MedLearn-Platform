@@ -88,18 +88,20 @@ const AboutUs = () => {
                   <Icon icon="pajamas:linkedin" />
                 </a>
                 <a
-                  href="#"
+                  target="_blank"
+                  href="https://x.com/EhabNaser59"
                   className="text-gray-400 hover:text-black soft text-2xl"
                 >
                   <Icon icon="prime:twitter" />
                 </a>
                 <a
-                  href="#"
+                  target="_blank"
+                  href="https://www.facebook.com/ehab.naser.798"
                   className="text-sky-600 hover:text-sky-800 soft text-2xl"
                 >
                   <Icon icon="devicon-plain:facebook" />
                 </a>
-                <a href="#" className="text-2xl">
+                <a target="_blank" href="https://www.instagram.com/ehabnaser1903/" className="text-2xl">
                   <Icon icon="skill-icons:instagram" />
                 </a>
               </div>
