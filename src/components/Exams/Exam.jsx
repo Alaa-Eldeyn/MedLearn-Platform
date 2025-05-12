@@ -50,18 +50,18 @@ const Exam = ({ isFree }) => {
     setExams([]);
     if (isFree) {
       let res = await getAllFreeExams();
-      if (res.isSuccess) {
+      if (res?.isSuccess) {
         setExams(res?.data);
       } else {
-        console.log(res);
+        toast.error(res?.message);
       }
     } else {
       let res = await getAllPremiumExams();
-      if (res.isSuccess) {
+      if (res?.isSuccess) {
         setExams(res?.data);
       } else {
         setEnrollModal(true);
-        console.log(res);
+        toast.error(res?.message);
       }
     }
   };

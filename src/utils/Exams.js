@@ -167,7 +167,6 @@ const deleteQuestion = async (id) => {
     confirmButtonText: "Delete",
   });
   if (result.isConfirmed) {
-    console.log(id);
     try {
       let response = await customAxios.delete(`/Question/${id}`);
       return response?.data;
@@ -187,9 +186,6 @@ const getFilteredExams = async (filters) => {
       : "";
     const isPremium = !filters.isPremium;
     let response = await customAxios.get(
-      `/StandardTest/GetStandardTestsFilteredPaginated?categoryId=${categoryId}&subCategoryId=${subCategoryId}&isPremium=${isPremium}`
-    );
-    console.log(
       `/StandardTest/GetStandardTestsFilteredPaginated?categoryId=${categoryId}&subCategoryId=${subCategoryId}&isPremium=${isPremium}`
     );
 

@@ -75,7 +75,6 @@ const EditCourse = () => {
       Objectives: objectives,
     };
     let res = await editCourse(data);
-    console.log(res);
 
     if (res?.isSuccess) {
       setEditInfo(false);

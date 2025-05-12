@@ -32,8 +32,6 @@ const Courses = () => {
   });
   const fetchCourses = async () => {
     let res = await getFilteredCourses(filters);
-      console.log(res);
-
     if (res?.isSuccess) {
       setCourses(res?.data || []);
     } else if (res?.message == "No courses available with the specified filters.") {
