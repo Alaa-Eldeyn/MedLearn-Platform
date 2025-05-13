@@ -55,8 +55,7 @@ const Courses = () => {
   useEffect(() => {
     fetchCourses();
   }, [filters.pageSize]);
-
-
+  
   useEffect(() => {
     const fetchSubCategories = async () => {
       let subs = await getSubs(filters.categoryId);
@@ -257,7 +256,7 @@ const Courses = () => {
                   <span className="text-xs">
                     By: {item?.instructorFullName}
                   </span>
-                 {item.userCourseStatus ==6 || item.type ==0 ?
+                 {item?.userCourseStatus === 6 ?
                  <Link
                 to={`/academy/my-courses/${item?.id}`}
                 className="center text-white bg-primary p-3 w-full rounded-full mt-3"

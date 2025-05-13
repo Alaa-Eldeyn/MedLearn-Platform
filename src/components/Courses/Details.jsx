@@ -20,7 +20,6 @@ const Details = () => {
   const [enrollModal, setEnrollModal] = useState(false);
   const [receipt, setReceipt] = useState(null);
   const [paypalEmail, setPaypalEmail] = useState("");
-  const [isMine, setIsMine] = useState(false);
 
   const handleLocalPayment = async () => {
     let user = getUser();
@@ -68,14 +67,12 @@ const Details = () => {
 
         if (res?.isSuccess && res?.data) {
           setCourse(res.data);
-          setIsMine(true);
           return;
         } else {
           const searchRes = await searchForCourse(name);
 
           if (searchRes?.isSuccess && searchRes?.data) {
             setCourse(searchRes.data);
-            setIsMine(false);
             return;
           } else {
             toast.error("Course not found.");
@@ -86,11 +83,10 @@ const Details = () => {
         toast.error("Something went wrong.");
       }
     };
-
+    
     fetchCourse();
     window.scrollTo(0, 0);
   }, [name, id]);
-
 
   return (
     <>
@@ -166,7 +162,7 @@ const Details = () => {
                 <span className="line-clamp-1">{course?.subCategoryName}</span>
               </div>
             </div>
-            {isMine || course?.type == 0 ? (
+            {course?.userCourseStatus == 6 ? (
               <Link
                 to={`/academy/my-courses/${id}`}
                 className="center text-white bg-primary p-3 w-full rounded-full mt-3"
