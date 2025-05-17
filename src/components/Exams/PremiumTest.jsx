@@ -134,7 +134,7 @@ const PremiumTest = () => {
         />
       ) : (
         <>
-          <div className="flex gap-x-12 py-20 container w-full">
+          <div className="flex gap-12 flex-col md:flex-row py-10 container w-full">
             <div className="rounded-xl bg-white p-5 border-2 border-[#EC8AB3] h-96 md:w-[460px] ">
               <h2 className="font-bold">
                 Questions {`(${questions?.length || 0})`}

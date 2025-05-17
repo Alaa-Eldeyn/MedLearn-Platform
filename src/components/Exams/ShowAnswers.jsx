@@ -57,7 +57,7 @@ function ShowAnswers({
   }, [questions]);
 
   return (
-    <div className="flex gap-x-12 py-20 container">
+    <div className="py-10 container flex gap-12 flex-col md:flex-row w-full">
       <div className="rounded-xl bg-white p-5 border-2 border-[#EC8AB3] h-96 md:w-[460px]">
         <h2 className="font-bold">Questions ({questions?.length || 0})</h2>
 
@@ -79,7 +79,7 @@ function ShowAnswers({
                 }`}
               />
               <p className="line-clamp-1 flex-1">
-                {`${question?.id}. `} {question?.description}
+                  {`${i+1}. `} {question?.description}
               </p>
             </div>
           ))}
@@ -90,7 +90,7 @@ function ShowAnswers({
         <div className="flex-1">
           <div>
             <h3 className="font-bold text-xl mb-3">
-              {`${questions[currentQuestionIndex]?.id}. `}
+              {`${currentQuestionIndex + 1}. `}
               {questions[currentQuestionIndex]?.description}
             </h3>
             {questions[currentQuestionIndex]?.answers?.map((answer) => (

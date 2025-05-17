@@ -222,21 +222,19 @@ const FreeTest = () => {
                       key={question?.id}
                       onClick={() => setCurrentQuestionIndex(i)}
                       className={`flex items-center gap-2 rounded-lg border-2 border-transparent bg-gray-50 py-3 px-2 cursor-pointer hover:bg-[#FFF4F9]
-                ${
-                  currentQuestionIndex === i && "bg-[#FFF4F9] !border-[#EC8AB3]"
-                }
+                ${currentQuestionIndex === i && "bg-[#FFF4F9] !border-[#EC8AB3]"
+                        }
                 `}
                     >
                       <Icon
                         icon="icon-park-outline:dot"
-                        className={`text-2xl !size-4 ${
-                          question?.userAnswer
+                        className={`text-2xl !size-4 ${question?.userAnswer
                             ? "!text-[#EC8AB3]"
                             : " !text-black"
-                        }`}
+                          }`}
                       />
                       <p className="line-clamp-1 flex-1">
-                        {`${i+1}. `} {question?.description}
+                        {`${i + 1}. `} {question?.description}
                       </p>
                     </div>
                   ))}
